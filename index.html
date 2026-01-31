@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Beste KI Rechnungssoftware für Freelancer 2026</title>
-  <meta name="description" content="7 Top KI-Tools für Freelancer-Rechnungen verglichen: Kostenlos bis Premium. Spar Stunden!">
+  <title>Best AI Invoicing Software for Freelancers 2026</title>
+  <meta name="description" content="7 Top AI tools for freelancer invoicing compared: Free to Premium. Save hours on billing!">
   <style>
-    /* Grundreset & Typografie */
+    /* Reset & Typography */
     * { margin:0; padding:0; box-sizing:border-box; }
     body { 
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
       line-height: 1.8; 
-      color: #2d3748; 
-      background-color: #f7fafc; 
+      /* Cool Gray/Blue Background */
+      background-color: #f0f4f8; 
+      color: #4a5568; /* Slate Gray Text */
       font-size: 16px;
     }
     
@@ -23,30 +24,35 @@
       padding: 40px 20px; 
     }
 
-    /* Hero Section */
+    /* Hero Section - THEME CHANGE: Baby Blue */
     .hero { 
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-      color: white; 
+      /* Soft Baby Blue Gradient */
+      background: linear-gradient(135deg, #bfdbfe 0%, #e0f2fe 100%); 
+      color: #2d3748; /* Dark Gray text for contrast on light blue */
       text-align: center; 
-      padding: 80px 30px; /* Mehr Innenabstand */
+      padding: 80px 30px; 
       border-radius: 24px; 
-      margin-bottom: 60px; /* Mehr Abstand nach unten */
-      box-shadow: 0 20px 40px rgba(118, 75, 162, 0.2); 
+      margin-bottom: 60px; 
+      box-shadow: 0 20px 40px rgba(164, 202, 254, 0.25); 
+      border: 1px solid #daeefc;
     }
     .hero h1 { 
       font-size: 2.8em; 
       margin-bottom: 20px; 
       line-height: 1.2;
       font-weight: 800;
+      color: #1e3a8a; /* Darker Blue for Headline */
     }
     .hero p {
       font-size: 1.2em;
       opacity: 0.9;
       max-width: 600px;
       margin: 0 auto;
+      color: #475569;
     }
     .cta-button { 
-      background: #ff6b6b; 
+      /* CTA is now Dark Slate Gray for contrast */
+      background: #475569; 
       color: white; 
       padding: 18px 40px; 
       border: none; 
@@ -56,12 +62,13 @@
       text-decoration: none; 
       display: inline-block; 
       margin-top: 30px; 
-      box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3); 
+      box-shadow: 0 10px 20px rgba(71, 85, 105, 0.2); 
       transition: all 0.3s ease;
     }
     .cta-button:hover { 
       transform: translateY(-3px); 
-      box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4); 
+      background: #334155;
+      box-shadow: 0 15px 30px rgba(71, 85, 105, 0.3); 
     }
 
     /* Section Headers */
@@ -69,10 +76,10 @@
       font-size: 1.8em; 
       margin-bottom: 30px; 
       text-align: center; 
-      color: #1a202c;
+      color: #334155; /* Slate 800 */
     }
 
-    /* "Warum KI" Section (Neu gestaltet) */
+    /* "Why AI" Section */
     .why-ai {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -87,15 +94,15 @@
       border: 1px solid #e2e8f0;
       transition: transform 0.2s;
     }
-    .benefit:hover { transform: translateY(-5px); }
+    .benefit:hover { transform: translateY(-5px); border-color: #bfdbfe; }
     .benefit-icon { font-size: 2.5em; margin-bottom: 15px; display: block; }
-    .benefit h3 { font-size: 1.2em; margin-bottom: 10px; color: #4a5568; }
+    .benefit h3 { font-size: 1.2em; margin-bottom: 10px; color: #475569; }
     .benefit p { font-size: 0.95em; color: #718096; }
 
-    /* Top 3 Cards */
+    /* Top 3 Cards - THEME CHANGE: Blue/Gray Accents */
     .cards { 
       display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsiv */
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 30px; 
       margin-bottom: 80px; 
     }
@@ -103,54 +110,60 @@
       background: white; 
       padding: 35px; 
       border-radius: 20px; 
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
-      border-top: 6px solid; /* Oben statt links für modernen Look */
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03); 
+      border-top: 6px solid; 
       transition: transform 0.3s ease; 
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
-    .card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
-    .card.green { border-top-color: #4CAF50; }
-    .card.blue { border-top-color: #2196F3; }
-    .card.orange { border-top-color: #FF9800; }
-    .card h3 { margin-bottom: 15px; color: #2d3748; font-size: 1.4em; }
-    .card p { margin-bottom: 20px; color: #718096; }
+    .card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); }
+    
+    /* Adjusted colors to fit Baby Blue/Gray theme */
+    .card.light-blue { border-top-color: #93c5fd; } /* Baby Blue */
+    .card.steel { border-top-color: #64748b; }      /* Steel Gray */
+    .card.dark-blue { border-top-color: #3b82f6; }  /* Stronger Blue */
+
+    .card h3 { margin-bottom: 15px; color: #334155; font-size: 1.4em; }
+    .card p { margin-bottom: 20px; color: #64748b; }
     .card-links a { 
-      color: #667eea; 
+      color: #3b82f6; /* Link Blue */
       font-weight: 700; 
       text-decoration: none; 
       margin-right: 10px;
     }
-    .card-links a:hover { text-decoration: underline; }
+    .card-links a:hover { text-decoration: underline; color: #2563eb; }
 
     /* Table */
     .table-wrapper {
       background: white;
       border-radius: 20px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.03);
       padding: 10px;
-      overflow-x: auto; /* Scrollbar auf Handy */
+      overflow-x: auto; 
       margin-bottom: 80px;
+      border: 1px solid #e2e8f0;
     }
     table { 
       width: 100%; 
       border-collapse: collapse; 
       min-width: 600px;
     }
-    th, td { padding: 20px; text-align: left; border-bottom: 1px solid #edf2f7; }
-    th { background: #f8fafc; font-weight: 700; color: #4a5568; text-transform: uppercase; font-size: 0.85em; letter-spacing: 0.05em; }
+    th, td { padding: 20px; text-align: left; border-bottom: 1px solid #f1f5f9; }
+    th { background: #f8fafc; font-weight: 700; color: #64748b; text-transform: uppercase; font-size: 0.85em; letter-spacing: 0.05em; }
     tr:last-child td { border-bottom: none; }
-    td a { color: #5a67d8; font-weight: 600; text-decoration: none; }
+    td a { color: #3b82f6; font-weight: 600; text-decoration: none; }
+    tr:hover td { background-color: #f8fafc; }
 
-    /* "Welches ist Deins" Section (Neu gestaltet) */
+    /* Decision Helper Section */
     .decision-helper {
-      background: #edf2f7;
+      background: #e2e8f0; /* Light Gray */
       border-radius: 20px;
       padding: 50px;
       text-align: center;
       margin-bottom: 60px;
     }
+    .decision-helper h2 { color: #334155; }
     .decision-grid {
       display: flex;
       flex-wrap: wrap;
@@ -162,20 +175,22 @@
       background: white;
       padding: 15px 25px;
       border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.03);
       font-weight: 500;
+      color: #475569;
     }
-    .decision-item strong { display: block; color: #667eea; margin-bottom: 5px; font-size: 0.9em; text-transform: uppercase;}
+    .decision-item strong { display: block; color: #3b82f6; margin-bottom: 5px; font-size: 0.9em; text-transform: uppercase;}
+    .decision-item a { color: #334155; text-decoration: none; border-bottom: 1px dotted #94a3b8; }
 
     /* Footer */
     footer { 
       text-align: center; 
       padding: 40px; 
-      border-top: 1px solid #e2e8f0;
-      color: #a0aec0;
+      border-top: 1px solid #cbd5e1;
+      color: #94a3b8;
       font-size: 0.9em; 
     }
-    footer a { color: #718096; }
+    footer a { color: #64748b; }
 
     /* Mobile Tweaks */
     @media (max-width: 600px) { 
@@ -191,58 +206,58 @@
 
   <!-- HERO -->
   <div class="hero">
-    <h1>🚀 Deine Rechnung.<br>In 10 Sekunden fertig.</h1>
-    <p>Vergiss Excel. Diese 7 KI-Tools automatisieren deine Buchhaltung komplett – von kostenlos bis Profi.</p>
-    <a href="#table" class="cta-button">Vergleich starten →</a>
+    <h1>🚀 Create Invoices.<br>Done in 10 Seconds.</h1>
+    <p>Forget spreadsheets. These 7 AI tools fully automate your bookkeeping – from free to premium.</p>
+    <a href="#table" class="cta-button">Compare Tools →</a>
   </div>
 
-  <!-- WARUM KI? (Neu & Attraktiv) -->
-  <h2>💡 Warum du 2026 noch manuell tippst?</h2>
+  <!-- WHY AI? -->
+  <h2>💡 Why are you still typing manually in 2026?</h2>
   <div class="why-ai">
     <div class="benefit">
       <span class="benefit-icon">⏱️</span>
-      <h3>Zeit sparen</h3>
-      <p>KI schreibt Rechnung, Mahnung und Dankesmail automatisch. Du gewinnst 5h/Woche.</p>
+      <h3>Save Time</h3>
+      <p>AI writes invoices, reminders, and thank-you emails automatically. Save 5h/week.</p>
     </div>
     <div class="benefit">
       <span class="benefit-icon">💸</span>
-      <h3>Schneller Geld</h3>
-      <p>Automatisierte "Zahlungserinnerungen" sorgen dafür, dass Kunden 3x schneller zahlen.</p>
+      <h3>Get Paid Faster</h3>
+      <p>Automated "Payment Reminders" ensure clients pay up to 3x faster.</p>
     </div>
     <div class="benefit">
       <span class="benefit-icon">⚖️</span>
-      <h3>Rechtssicher</h3>
-      <p>Steuersätze, Pflichtangaben und GoBD? Die KI hält alles automatisch aktuell.</p>
+      <h3>Stay Compliant</h3>
+      <p>Tax rates and legal requirements? The AI keeps everything updated automatically.</p>
     </div>
   </div>
 
-  <!-- TOP 3 KARTEN -->
-  <h2>🔥 Unsere Top-Empfehlungen</h2>
+  <!-- TOP 3 CARDS -->
+  <h2>🔥 Our Top Picks</h2>
   <div class="cards">
-    <div class="card green">
+    <div class="card light-blue">
       <div>
-        <h3>💰 Der Sparfuchs</h3>
-        <p>Perfekt für den Start. $0 Kosten, aber volle Funktionalität.</p>
+        <h3>💰 The Budget Saver</h3>
+        <p>Perfect for starting out. $0 cost, but full functionality.</p>
       </div>
       <div class="card-links">
         <a href="https://waveapps.com/?ref=YOURID">📱 Wave App</a>
         <a href="https://zoho.com/invoice/?ref=YOURID">🌍 Zoho Invoice</a>
       </div>
     </div>
-    <div class="card blue">
+    <div class="card steel">
       <div>
-        <h3>⭐ Der Profi</h3>
-        <p>Das Rundum-Sorglos-Paket. Buchhaltung, Zeiterfassung & Steuer in einem.</p>
+        <h3>⭐ The Professional</h3>
+        <p>The all-in-one package. Accounting, time tracking & taxes.</p>
       </div>
       <div class="card-links">
         <a href="https://freshbooks.com/?ref=YOURID">⚡ FreshBooks</a>
         <a href="https://quickbooks.com/?ref=YOURID">📊 QuickBooks</a>
       </div>
     </div>
-    <div class="card orange">
+    <div class="card dark-blue">
       <div>
-        <h3>🚀 Der Nomade</h3>
-        <p>Rechnungen per WhatsApp oder App verschicken? Hier entlang.</p>
+        <h3>🚀 The Nomad</h3>
+        <p>Send invoices via WhatsApp or App? Right this way.</p>
       </div>
       <div class="card-links">
         <a href="https://invoyce.ai/?ref=YOURID">⚡ Invoyce</a>
@@ -251,54 +266,54 @@
     </div>
   </div>
 
-  <!-- TABELLE -->
-  <h2 id="table">📊 Alle 7 Tools im Direktvergleich</h2>
+  <!-- TABLE -->
+  <h2 id="table">📊 All 7 Tools Compared</h2>
   <div class="table-wrapper">
     <table>
       <thead>
         <tr>
           <th>Tool</th>
-          <th>Preis/Monat</th>
-          <th>Ideal für...</th>
+          <th>Price/Month</th>
+          <th>Best for...</th>
           <th>⭐ Rating</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td><a href="https://freshbooks.com/?ref=YOURID">FreshBooks</a></td><td>ab 19€ (30d gratis)</td><td>Profi-Freelancer</td><td>4.8</td></tr>
-        <tr><td><a href="https://waveapps.com/?ref=YOURID">Wave</a></td><td><strong>Kostenlos</strong></td><td>Einsteiger & Solos</td><td>4.5</td></tr>
-        <tr><td><a href="https://invoyce.ai/?ref=YOURID">Invoyce</a></td><td>0€ (Kunde zahlt Gebühr)</td><td>Mobile Nutzung</td><td>4.7</td></tr>
-        <tr><td><a href="https://invoicer.ai/?ref=YOURID">Invoicer.ai</a></td><td>ca. 10€</td><td>Schnelligkeit</td><td>4.6</td></tr>
-        <tr><td><a href="https://zoho.com/?ref=YOURID">Zoho Invoice</a></td><td>Kostenlos</td><td>Internationales</td><td>4.4</td></tr>
-        <tr><td><a href="https://hellobonsai.com/?ref=YOURID">Bonsai</a></td><td>ab 17€</td><td>Verträge & Proposals</td><td>4.9</td></tr>
-        <tr><td><a href="https://quickbooks.com/?ref=YOURID">QuickBooks</a></td><td>ab 25€</td><td>Bilanzierung</td><td>4.7</td></tr>
+        <tr><td><a href="https://freshbooks.com/?ref=YOURID">FreshBooks</a></td><td>from $19 (30d free)</td><td>Pro Freelancers</td><td>4.8</td></tr>
+        <tr><td><a href="https://waveapps.com/?ref=YOURID">Wave</a></td><td><strong>Free</strong></td><td>Starters & Solos</td><td>4.5</td></tr>
+        <tr><td><a href="https://invoyce.ai/?ref=YOURID">Invoyce</a></td><td>$0 (Client fee)</td><td>Mobile Use</td><td>4.7</td></tr>
+        <tr><td><a href="https://invoicer.ai/?ref=YOURID">Invoicer.ai</a></td><td>approx. $10</td><td>Speed</td><td>4.6</td></tr>
+        <tr><td><a href="https://zoho.com/?ref=YOURID">Zoho Invoice</a></td><td>Free</td><td>International</td><td>4.4</td></tr>
+        <tr><td><a href="https://hellobonsai.com/?ref=YOURID">Bonsai</a></td><td>from $17</td><td>Contracts & Proposals</td><td>4.9</td></tr>
+        <tr><td><a href="https://quickbooks.com/?ref=YOURID">QuickBooks</a></td><td>from $25</td><td>Accounting</td><td>4.7</td></tr>
       </tbody>
     </table>
   </div>
 
-  <!-- ENTSCHEIDUNGSHILFE (Neu & Attraktiv) -->
+  <!-- DECISION HELPER -->
   <div class="decision-helper">
-    <h2>🎯 Welches Tool passt zu mir?</h2>
-    <p>Mach es dir nicht zu kompliziert. Hier ist unsere Faustregel:</p>
+    <h2>🎯 Which tool is right for me?</h2>
+    <p>Don't overcomplicate it. Here is our rule of thumb:</p>
     
     <div class="decision-grid">
       <div class="decision-item">
-        <strong>Du startest gerade erst?</strong>
-        Nimm <a href="#">Wave</a>
+        <strong>Just starting out?</strong>
+        Pick <a href="#">Wave</a>
       </div>
       <div class="decision-item">
-        <strong>Du willst skalieren?</strong>
-        Nimm <a href="#">FreshBooks</a>
+        <strong>Ready to scale?</strong>
+        Pick <a href="#">FreshBooks</a>
       </div>
       <div class="decision-item">
-        <strong>Du brauchst Verträge?</strong>
-        Nimm <a href="#">Bonsai</a>
+        <strong>Need Contracts?</strong>
+        Pick <a href="#">Bonsai</a>
       </div>
     </div>
   </div>
 
   <footer>
-    <p><strong>Transparenz:</strong> Wir nutzen Affiliate-Links. Für dich ändert sich der Preis nicht, aber du unterstützt unsere Arbeit. Danke! ❤️</p>
-    <p style="margin-top:10px; font-size:0.8em">Stand: Januar 2026 | <a href="mailto:dukatlogical@gmail.com">Kontakt</a> | <a href="#">Impressum</a></p>
+    <p><strong>Disclosure:</strong> This site uses affiliate links. As an associate, I earn from qualifying purchases at no extra cost to you. Thank you for your support! ❤️</p>
+    <p style="margin-top:10px; font-size:0.8em">Updated: Jan 2026 | <a href="mailto:hi@your-email.com">Contact</a></p>
   </footer>
 
 </div> <!-- End Container -->
