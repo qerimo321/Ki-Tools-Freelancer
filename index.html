@@ -9,14 +9,10 @@
     gtag('js', new Date());
     gtag('config', 'G-BSC0RCF1MJ');
   </script>
-  <!-- Ende Google Analytics -->
 
-  <!-- Security Headers -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.google-analytics.com;">
+  <!-- Security Headers (CSP removed for GA4 compatibility) -->
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
-  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   <meta name="referrer" content="no-referrer-when-downgrade">
-  <!-- End Security Headers -->
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -34,7 +30,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
-    /* --- VARIABLES & THEME --- */
     :root {
       --bg-dark: #020617;
       --card-bg: rgba(30, 41, 59, 0.4);
@@ -67,13 +62,8 @@
 
     @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(56, 189, 248, 0); } 100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); } }
     @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0px); } }
 
-    .hero { 
-      text-align: center; 
-      padding: 140px 20px 60px; 
-      position: relative;
-    }
+    .hero { text-align: center; padding: 140px 20px 60px; position: relative; }
     .badge-pill {
       background: rgba(56, 189, 248, 0.1);
       border: 1px solid rgba(56, 189, 248, 0.3);
@@ -260,7 +250,6 @@
       backdrop-filter: blur(10px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    #social-toast img { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--accent); }
 
     footer { text-align: center; color: #64748b; padding: 60px 20px; font-size: 0.9em; border-top: 1px solid rgba(255,255,255,0.05); }
     footer a { color: var(--accent); text-decoration: none; }
@@ -275,7 +264,7 @@
 </head>
 <body>
 
-<!-- Honeypot gegen Spam-Bots (versteckt) -->
+<!-- Honeypot for Bot Protection -->
 <div style="position:absolute; left:-5000px;" aria-hidden="true">
   <input type="text" name="website" tabindex="-1" value="" autocomplete="off">
 </div>
@@ -490,8 +479,7 @@
 </div>
 
 <script>
-  // --- SECURITY FEATURES ---
-  // Anti-Spam Rate Limiting
+  // --- SECURITY: Anti-Spam Rate Limiting ---
   let clickCount = 0;
   let isBlocked = false;
   document.addEventListener('DOMContentLoaded', function() {
@@ -502,28 +490,24 @@
           isBlocked = true;
           alert('⚠️ Too many clicks detected. Please wait 60 seconds.');
           e.preventDefault();
-          setTimeout(() => { 
-            clickCount = 0; 
-            isBlocked = false; 
-          }, 60000);
+          setTimeout(() => { clickCount = 0; isBlocked = false; }, 60000);
         }
       });
     });
   });
 
-  // Console Warning
+  // --- SECURITY: Console Warning ---
   (function() {
     let devtools = /./;
     devtools.toString = function() {
       console.log('%c⚠️ STOP!', 'color:red; font-size:40px; font-weight:bold;');
       console.log('%cThis console is for developers only.', 'font-size:16px;');
-      console.log('%cIf someone told you to paste code here, it might be a scam!', 'font-size:14px; color:orange;');
       return '';
     };
     console.log('%c ', devtools);
   })();
 
-  // --- CALCULATOR LOGIC ---
+  // --- Calculator ---
   function updateCalc() {
     const val = document.getElementById('invoiceRange').value;
     document.getElementById('invoiceCount').innerText = val;
@@ -534,7 +518,7 @@
   }
   updateCalc();
 
-  // --- SOCIAL PROOF SIMULATION ---
+  // --- Social Proof ---
   setTimeout(() => {
     document.getElementById('social-toast').style.transform = "translateY(0)";
     setTimeout(() => {
@@ -542,12 +526,12 @@
     }, 5000);
   }, 8000);
 
-  // --- SCROLLING ---
+  // --- Scroll ---
   function scrollToSection(id) {
     document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
   }
 
-  // --- SORTING ---
+  // --- Sorting ---
   function sortCards(criteria) {
     const grid = document.getElementById('tools-grid');
     const cards = Array.from(grid.getElementsByClassName('card'));
@@ -564,7 +548,7 @@
     cards.forEach(card => grid.appendChild(card));
   }
 
-  // --- QUIZ ---
+  // --- Quiz ---
   function runQuiz(type, btnElement) {
     const recBox = document.getElementById('recommendation');
     const title = document.getElementById('rec-title');
@@ -588,7 +572,7 @@
     localStorage.setItem('quizResult', JSON.stringify({type, index: Array.from(btnElement.parentNode.children).indexOf(btnElement)}));
   }
 
-  // Check Memory
+  // --- Memory ---
   window.onload = function() {
     const saved = localStorage.getItem('quizResult');
     if(saved) {
