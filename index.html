@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 🔥 SCROLL FIX: Muss ganz oben stehen -->
-<script>
-    if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-    }
-    window.scrollTo(0, 0); // Zwingt den Browser sofort nach oben
-    
-    // Zusätzliche Sicherheit beim Verlassen der Seite
-    window.onbeforeunload = function () {
-        window.scrollTo(0, 0);
-    }
-</script>
-
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-BSC0RCF1MJ"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-BSC0RCF1MJ');</script>
 
@@ -43,7 +30,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-/* Flüssiges Scrollen */
+/* Grundeinstellungen */
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 20px;
@@ -81,7 +68,6 @@ body{
 
 /* --- NAV BUTTON STYLES --- */
 
-/* Container für die schwebenden Buttons */
 #floating-nav {
     position: fixed;
     right: 20px;
@@ -91,7 +77,7 @@ body{
     flex-direction: column;
     gap: 15px; 
     z-index: 9999;
-    opacity: 0.6;
+    opacity: 0.7; /* Leicht sichtbar standardmäßig */
     transition: opacity 0.3s;
 }
 
@@ -99,7 +85,6 @@ body{
     opacity: 1;
 }
 
-/* Styling der einzelnen Buttons */
 .nav-btn {
     width: 45px;
     height: 45px;
@@ -115,7 +100,7 @@ body{
     backdrop-filter: blur(5px);
     box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     
-    /* 🔥 WICHTIG: Langsamer Fade-Out zurück zur Originalfarbe */
+    /* 🔥 Logic: Standardzustand hat lange Transition für das "Ausfaden" */
     transition: background-color 0.8s ease, transform 0.3s ease, border-color 0.8s ease, color 0.8s ease;
 }
 
@@ -124,26 +109,25 @@ body{
     border-color: var(--accent);
 }
 
-/* Klasse für den Klick-Effekt (wird per JS hinzugefügt) */
-.nav-btn-active {
-    background-color: var(--accent, #38bdf8) !important;
+/* Aktiver Zustand (wird per JS getriggert) */
+.nav-btn.clicked {
+    background-color: var(--accent) !important;
     color: #0f172a !important;
     border-color: var(--accent) !important;
     transform: scale(0.95) !important;
-    box-shadow: 0 0 20px rgba(56, 189, 248, 0.8) !important;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.6) !important;
     
-    /* 🔥 Sofortige Farbänderung beim Klick ohne Verzögerung */
+    /* 🔥 WICHTIG: Keine Transition beim "Anschalten", damit es sofort blau wird */
     transition: none !important;
 }
 
-/* Rotation für den "Ganz nach oben" Button */
 .nav-btn:first-child { 
     transform: rotate(-90deg); 
 }
 .nav-btn:first-child:hover { 
     transform: rotate(-90deg) scale(1.1); 
 }
-.nav-btn:first-child.nav-btn-active {
+.nav-btn:first-child.clicked {
     transform: rotate(-90deg) scale(0.95) !important;
 }
 
@@ -226,4 +210,570 @@ body{
 
 .controls-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;flex-wrap:wrap;gap:15px}
 .sort-btn{background:0 0;border:1px solid rgba(255,255,255,.1);color:var(--text-muted);padding:8px 16px;border-radius:50px;cursor:pointer;font-size:.9em;margin-left:8px;transition:all .2s;min-height:44px}
-.sort-btn.active-sort{bor
+.sort-btn.active-sort{border-color:var(--accent);color:var(--accent);background:rgba(56,189,248,.05)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:25px;margin-bottom:100px}
+.card{background:var(--card-bg);backdrop-filter:blur(12px);padding:30px;border-radius:24px;border:var(--glass-border);transition:var(--transition-organic);display:flex;flex-direction:column}
+.card:hover{transform:translateY(-8px);border-color:rgba(56,189,248,.3)}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:15px}
+.card h3{font-size:1.4em;font-weight:700}
+.rating-badge{font-size:.8em;color:var(--warning);font-weight:700;background:rgba(251,191,36,.1);padding:4px 8px;border-radius:8px}
+.price-tag{font-size:.85em;color:var(--accent);margin-bottom:15px;font-weight:600;background:rgba(56,189,248,.1);padding:5px 12px;border-radius:8px;display:inline-block}
+.card p{color:var(--text-muted);font-size:.95em;flex-grow:1;margin-bottom:25px;line-height:1.6}
+.card-link{text-align:center;width:100%;padding:14px;border-radius:14px;background:rgba(255,255,255,.05);color:#fff;text-decoration:none;font-weight:600;transition:background .2s}
+.card-link:hover{background:var(--accent);color:#0f172a}
+
+.table-container{overflow-x:auto;background:rgba(15,23,42,.6);border-radius:24px;border:var(--glass-border);margin-bottom:100px;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+table{width:100%;border-collapse:collapse;min-width:850px}
+th{color:var(--accent);font-weight:700;text-transform:uppercase;font-size:.8em;letter-spacing:1px;padding:25px;text-align:left;background:rgba(56,189,248,.05)}
+td{padding:25px;text-align:left;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text-muted)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.02)}
+
+/* FAQ Styles */
+.faq-enhanced{max-width:900px;margin:0 auto 100px}
+.faq-search-wrapper{position:relative;margin-bottom:40px}
+.faq-search{width:100%;padding:18px 50px;border-radius:16px;border:var(--glass-border);background:rgba(15,23,42,.6);color:#fff;font-size:1em;backdrop-filter:blur(10px);transition:all .3s}
+.faq-search:focus{background:rgba(15,23,42,.9);border-color:var(--accent);outline:none}
+.faq-search-icon{position:absolute;left:20px;top:50%;transform:translateY(-50%);color:var(--accent);font-size:1.2em}
+.faq-clear-icon{position:absolute;right:20px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:1.2em;cursor:pointer;display:none}
+.faq-clear-icon:hover{color:#fff}
+.faq-categories{display:flex;gap:10px;margin-bottom:40px;flex-wrap:wrap;justify-content:center}
+.faq-cat-btn{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);color:var(--text-muted);padding:10px 20px;border-radius:50px;cursor:pointer;transition:all .3s;font-size:.9em;font-weight:600;min-height:44px}
+.faq-cat-btn:hover{background:rgba(255,255,255,.08)}
+.faq-cat-btn.active{background:var(--accent);border-color:var(--accent);color:#0f172a;transform:translateY(-2px);box-shadow:0 4px 15px rgba(56,189,248,.4)}
+.faq-group{margin-bottom:40px}
+.faq-group-title{font-size:1.3em;font-weight:700;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.faq-item-enhanced{background:var(--card-bg);border-radius:16px;margin-bottom:12px;border:var(--glass-border);overflow:hidden;transition:all .3s}
+.faq-item-enhanced:hover{border-color:rgba(56,189,248,.3);transform:translateX(4px)}
+.faq-question-enhanced{padding:20px 25px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:600;user-select:none}
+.faq-question-icon{display:flex;align-items:center;gap:12px;flex:1}
+.faq-emoji{font-size:1.3em;filter:grayscale(.3)}
+.faq-toggle{width:28px;height:28px;border-radius:50%;background:rgba(56,189,248,.1);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:.9em;transition:all .3s;flex-shrink:0}
+.faq-item-enhanced.open .faq-toggle{background:var(--accent);color:#0f172a;transform:rotate(180deg)}
+.faq-answer-enhanced{padding:0;margin:0;color:var(--text-muted);line-height:1.7;max-height:0;overflow:hidden;opacity:0;transition:max-height .4s ease,padding .4s ease,opacity .3s ease}
+.faq-item-enhanced.open .faq-answer-enhanced{max-height:800px;padding:0 25px 20px 62px;opacity:1}
+.faq-no-results{text-align:center;padding:60px 20px;color:var(--text-muted);display:none}.faq-no-results.show{display:block}
+.faq-cta-box{background:linear-gradient(135deg,rgba(59,130,246,.1),rgba(56,189,248,.1));border:1px solid rgba(56,189,248,.3);border-radius:20px;padding:30px;text-align:center;margin-top:50px}
+.faq-cta-box h3{margin-bottom:15px;font-size:1.4em}
+.faq-cta-box p{color:var(--text-muted);margin-bottom:25px}
+
+footer{text-align:center;color:#64748b;padding:60px 20px;font-size:.9em;border-top:1px solid rgba(255,255,255,.05)}
+footer a{color:var(--accent);text-decoration:none;transition:color .2s}
+footer a:hover{color:#fff}
+
+@media(max-width:1024px){
+  #floating-nav {right: 10px; opacity: 0.8;}
+  .nav-btn {width: 40px; height: 40px; font-size: 18px;}
+}
+@media(max-width:768px){
+  .industry-grid,.integration-grid{grid-template-columns:1fr}
+  .timeline-line{left:18px}.timeline-marker{width:40px;height:40px}
+  .mistakes-box{padding:30px 20px}
+  .faq-search{font-size:.9em}
+  .faq-item-enhanced.open .faq-answer-enhanced{padding-left:25px}
+  .nav-pills{gap:8px}.nav-pill{padding:8px 16px;font-size:.8em}
+}
+</style>
+</head>
+<body>
+
+<!-- HTML für die Buttons (Neue Navigation) -->
+<div id="floating-nav">
+    <!-- Doppelpfeil nach Oben (Ganz zum Anfang) -->
+    <button class="nav-btn" onclick="scrollToTop(this)" title="Zum Anfang">
+        &#187; 
+    </button>
+    
+    <!-- Pfeil nach Oben (Vorheriger Bereich) -->
+    <button class="nav-btn" onclick="scrollToPrev(this)" title="Vorheriger Bereich">
+        &#8593;
+    </button>
+    
+    <!-- Pfeil nach Unten (Nächster Bereich) -->
+    <button class="nav-btn" onclick="scrollToNext(this)" title="Nächster Bereich">
+        &#8595;
+    </button>
+</div>
+
+<div class="container" id="main-content">
+
+<div class="hero">
+<div class="badge-pill">🚀 Updated for 2026</div>
+<h1>Invoicing.<br><span>Done in 10 Seconds.</span></h1>
+<p>Forget manual spreadsheets. These 7 AI tools automate 90% of your billing process. Smartly compared and tested.</p>
+<div class="nav-pills">
+<a href="#calculator" class="nav-pill">🧮 Calculator</a>
+<a href="#mistakes" class="nav-pill">⚠️ Mistakes</a>
+<a href="#industries" class="nav-pill">🏗️ Industries</a>
+<a href="#quiz" class="nav-pill">🎯 Quiz</a>
+<a href="#timeline" class="nav-pill">📅 Timeline</a>
+<a href="#tools-grid" class="nav-pill">🔥 Tools</a>
+<a href="#integrations" class="nav-pill">🔗 Integrations</a>
+<a href="#comparison" class="nav-pill">📊 Comparison</a>
+<a href="#faq" class="nav-pill">❓ FAQ</a>
+</div>
+</div>
+
+<div class="calc-widget" id="calculator">
+<div class="calc-title">How many invoices do you send per month?</div>
+<input type="range" min="1" max="50" value="5" class="calc-slider" id="invoiceRange" oninput="updateCalc()" aria-label="Number of invoices per month">
+<div style="margin-bottom:10px;font-weight:bold"><span id="invoiceCount">5</span> Invoices</div>
+<div class="calc-sub">With AI automation, you save approx:</div>
+<div class="calc-result"><span id="hoursSaved">10</span> Hours / Year</div>
+<div class="calc-sub" style="margin-top:5px">That's <span id="moneySaved" style="font-weight:bold">$1,000+</span> in billable time!</div>
+</div>
+
+<div class="mistakes-box" id="mistakes">
+<h2>⚠️ 5 Costly Invoicing Mistakes</h2>
+<div class="mistake-item"><div class="mistake-icon">❌</div><div class="mistake-content"><h4>No Clear Payment Terms</h4><p>→ Leads to 30% late payments and cashflow problems</p></div></div>
+<div class="mistake-item"><div class="mistake-icon">❌</div><div class="mistake-content"><h4>Manual Payment Reminders</h4><p>→ Wastes an average of 12 hours per month</p></div></div>
+<div class="mistake-item"><div class="mistake-icon">❌</div><div class="mistake-content"><h4>No Systematic Invoice Backup</h4><p>→ Can lead to legal issues during tax audits</p></div></div>
+<div class="mistake-item"><div class="mistake-icon">❌</div><div class="mistake-content"><h4>Inconsistent Invoice Numbering</h4><p>→ Complicates accounting and looks unprofessional</p></div></div>
+<div class="mistake-item"><div class="mistake-icon">❌</div><div class="mistake-content"><h4>No Time Tracking for Services</h4><p>→ Loss of up to 20% billable hours</p></div></div>
+<div class="mistakes-solution"><h3>✅ The Solution: Automated Invoicing Tools</h3><p>Modern AI systems eliminate these errors automatically and save you time + money</p></div>
+</div>
+
+<div class="industry-section" id="industries">
+<h2 style="text-align:center;font-size:1.8em;font-weight:800;margin-bottom:40px">🏗️ Perfect Tool for Your Industry</h2>
+<div class="industry-grid">
+<div class="industry-card" onclick="scrollToSection('tools-grid')" tabindex="0" role="button"><span class="industry-icon">🎨</span><h3>Designers & Creatives</h3><span class="industry-tool">→ Bonsai</span><p>Integrated contracts, portfolio presentation and professional proposals in one tool.</p><div class="industry-features"><span class="industry-tag">Contracts</span><span class="industry-tag">Proposals</span><span class="industry-tag">Time Tracking</span></div></div>
+<div class="industry-card" onclick="scrollToSection('tools-grid')" tabindex="0" role="button"><span class="industry-icon">💻</span><h3>Developers & Tech</h3><span class="industry-tool">→ FreshBooks</span><p>Precise time tracking, project-based billing and API integrations for automated workflows.</p><div class="industry-features"><span class="industry-tag">API</span><span class="industry-tag">Projects</span><span class="industry-tag">Time Tracking</span></div></div>
+<div class="industry-card" onclick="scrollToSection('tools-grid')" tabindex="0" role="button"><span class="industry-icon">📸</span><h3>Photographers & Content Creators</h3><span class="industry-tool">→ Invoyce</span><p>Mobile-first design enables invoice creation directly from shooting locations via smartphone.</p><div class="industry-features"><span class="industry-tag">Mobile App</span><span class="industry-tag">Fast</span><span class="industry-tag">Simple</span></div></div>
+<div class="industry-card" onclick="scrollToSection('tools-grid')" tabindex="0" role="button"><span class="industry-icon">🌍</span><h3>Digital Nomads & Travelers</h3><span class="industry-tool">→ Zoho Invoice</span><p>Multi-currency support and international tax features - perfect for worldwide clients.</p><div class="industry-features"><span class="industry-tag">Multi-Currency</span><span class="industry-tag">Free</span><span class="industry-tag">Cloud</span></div></div>
+<div class="industry-card" onclick="scrollToSection('tools-grid')" tabindex="0" role="button"><span class="industry-icon">✍️</span><h3>Writers & Consultants</h3><span class="industry-tool">→ Wave</span><p>Free basic features are completely sufficient for simple, recurring invoices.</p><div class="industry-features"><span class="industry-tag">Free</span><span class="industry-tag">Simple</span><span class="industry-tag">Accounting</span></div></div>
+<div class="industry-card" onclick="scrollToSection('tools-grid')" tabindex="0" role="button"><span class="industry-icon">📊</span><h3>Agencies & Teams</h3><span class="industry-tool">→ QuickBooks</span><p>Complete accounting, team management and advanced reporting features for growing businesses.</p><div class="industry-features"><span class="industry-tag">Teams</span><span class="industry-tag">Reports</span><span class="industry-tag">Tax</span></div></div>
+</div>
+</div>
+
+<div id="quiz" class="quiz-section">
+<h2>🎯 The Intelligence Engine</h2>
+<p style="color:#94a3b8;margin-bottom:25px">Select your profile. We remember your choice.</p>
+<div class="quiz-options">
+<button class="quiz-btn" onclick="runQuiz('starter',this)" aria-label="Select starter plan">🐣 Starter ($0)</button>
+<button class="quiz-btn" onclick="runQuiz('pro',this)" aria-label="Select pro plan">💼 Pro (Scaling)</button>
+<button class="quiz-btn" onclick="runQuiz('nomad',this)" aria-label="Select nomad plan">🌍 Nomad</button>
+<button class="quiz-btn" onclick="runQuiz('intl',this)" aria-label="Select global plan">🌐 Global</button>
+</div>
+<div id="recommendation" role="region" aria-live="polite">
+<h3 id="rec-title" style="margin-bottom:10px;font-size:1.5em"></h3>
+<p id="rec-text" style="color:#cbd5e1;margin-bottom:25px"></p>
+<a id="rec-link" href="#" target="_blank" rel="noopener" style="padding:14px 40px;font-size:1em;color:#0f172a;display:inline-block;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:100px;text-decoration:none;font-weight:700;transition:all .3s">Launch Tool</a>
+</div>
+</div>
+
+<div class="timeline-section" id="timeline">
+<h2>📅 Your Journey to Perfect Setup</h2>
+<div class="timeline-container">
+<div class="timeline-line" aria-hidden="true"></div>
+<div class="timeline-step completed"><div class="timeline-marker" aria-label="Completed">✅</div><div class="timeline-content"><div class="timeline-title">Tool Selection</div><div class="timeline-desc">Found the perfect tool for your needs</div><span class="timeline-status">Completed</span></div></div>
+<div class="timeline-step active"><div class="timeline-marker" aria-label="Current step">⏳</div><div class="timeline-content"><div class="timeline-title">Setup & Templates</div><div class="timeline-desc">Create invoice templates, upload logo, set payment terms</div><span class="timeline-status">You are here</span></div></div>
+<div class="timeline-step pending"><div class="timeline-marker" aria-label="Upcoming">📝</div><div class="timeline-content"><div class="timeline-title">First Invoices</div><div class="timeline-desc">Create 3-5 test invoices and optimize</div><span class="timeline-status">Coming Soon</span></div></div>
+<div class="timeline-step pending"><div class="timeline-marker" aria-label="Upcoming">💸</div><div class="timeline-content"><div class="timeline-title">First Payments</div><div class="timeline-desc">Track incoming payments and refine system</div><span class="timeline-status">Week 3-4</span></div></div>
+<div class="timeline-step pending"><div class="timeline-marker" aria-label="Upcoming">🚀</div><div class="timeline-content"><div class="timeline-title">Fully Automated</div><div class="timeline-desc">Recurring invoices + auto-reminders active</div><span class="timeline-status">Month 2</span></div></div>
+</div>
+</div>
+
+<div class="controls-header">
+<h2 style="margin:0;font-size:1.8em;font-weight:800">🔥 AI Tools Analysis</h2>
+<div><span style="color:#64748b;font-size:.9em;margin-right:5px">Sort by:</span><button onclick="sortCards('rating')" class="sort-btn active-sort" aria-label="Sort by rating">⭐ Rating</button><button onclick="sortCards('price')" class="sort-btn" aria-label="Sort by price">💰 Price</button></div>
+</div>
+
+<div class="cards" id="tools-grid">
+<div class="card" data-rating="4.8" data-price="19"><div class="card-header"><h3>FreshBooks</h3><div class="rating-badge" aria-label="Rating 4.8 out of 5">⭐ 4.8</div></div><div class="price-tag">from $19/mo</div><p>The industry standard. Best for automation, time tracking, and professional client portals.</p><a href="https://freshbooks.com/" class="card-link" target="_blank" rel="noopener nofollow">Visit Site</a></div>
+
+<div class="card" data-rating="4.5" data-price="0"><div class="card-header"><h3>Wave</h3><div class="rating-badge" aria-label="Rating 4.5 out of 5">⭐ 4.5</div></div><div class="price-tag">Free Forever</div><p>Unbeatable for starters. 100% free invoicing without hidden subscription costs.</p><a href="https://waveapps.com/" class="card-link" target="_blank" rel="noopener nofollow">Visit Site</a></div>
+
+<div class="card" data-rating="4.7" data-price="1"><div class="card-header"><h3>Invoyce</h3><div class="rating-badge" aria-label="Rating 4.7 out of 5">⭐ 4.7</div></div><div class="price-tag">~1% Fee</div><p>Mobile-first AI. Perfect for creating invoices on the go directly from your phone.</p><a href="https://invoyce.ai/" class="card-link" target="_blank" rel="noopener nofollow">Get App</a></div>
+
+<div class="card" data-rating="4.4" data-price="0"><div class="card-header"><h3>Zoho Invoice</h3><div class="rating-badge" aria-label="Rating 4.4 out of 5">⭐ 4.4</div></div><div class="price-tag">Free Forever</div><p>Best for international freelancers. Multi-currency and multi-language support built-in.</p><a href="https://zoho.com/invoice/" class="card-link" target="_blank" rel="noopener nofollow">Visit Site</a></div>
+
+<div class="card" data-rating="4.9" data-price="17"><div class="card-header"><h3>Bonsai</h3><div class="rating-badge" aria-label="Rating 4.9 out of 5">⭐ 4.9</div></div><div class="price-tag">from $17/mo</div><p>The premium suite. Contracts, proposals, and tax/accounting all in one place.</p><a href="https://hellobonsai.com/" class="card-link" target="_blank" rel="noopener nofollow">Visit Site</a></div>
+
+<div class="card" data-rating="4.6" data-price="10"><div class="card-header"><h3>Invoicer.ai</h3><div class="rating-badge" aria-label="Rating 4.6 out of 5">⭐ 4.6</div></div><div class="price-tag">Low Cost</div><p>Pure speed. Generates invoices instantly with AI assistance. Unlimited clients.</p><a href="https://invoicer.ai/" class="card-link" target="_blank" rel="noopener nofollow">Visit Site</a></div>
+
+<div class="card" data-rating="4.7" data-price="25"><div class="card-header"><h3>QuickBooks</h3><div class="rating-badge" aria-label="Rating 4.7 out of 5">⭐ 4.7</div></div><div class="price-tag">from $25/mo</div><p>For growing businesses. Heavy-duty accounting and tax preparation features.</p><a href="https://quickbooks.intuit.com/" class="card-link" target="_blank" rel="noopener nofollow">Visit Site</a></div>
+</div>
+
+<div class="integration-section" id="integrations">
+<h2 style="font-size:1.8em;font-weight:800;margin-bottom:20px">🔗 Integration Ecosystem</h2>
+<p style="color:var(--text-muted);max-width:600px;margin:0 auto 40px">Which tools connect with your favorite apps?</p>
+<div class="integration-grid">
+<div class="integration-hub"><h3>FreshBooks</h3><div class="integration-connects"><div class="integration-item"><div class="integration-logo">💳</div><div class="integration-name">Stripe</div><div class="integration-badge" aria-label="Supported">✓</div></div><div class="integration-item"><div class="integration-logo">💰</div><div class="integration-name">PayPal</div><div class="integration-badge" aria-label="Supported">✓</div></div><div class="integration-item"><div class="integration-logo">📧</div><div class="integration-name">Gmail</div><div class="integration-badge" aria-label="Supported">✓</div></div><div class="integration-item"><div class="integration-logo">💬</div><div class="integration-name">Slack</div><div class="integration-badge" aria-label="Supported">✓</div></div><div class="integration-item"><div class="integration-logo">⚡</div><div class="integration-name">Zapier</div><div class="integration-badge" aria-label="Supported">✓</div></div></div></div>
+
+<div class="integration-hub"><h3>Wave</h3><div class="integration-connects"><div class="integration-item"><div class="integration-logo">💰</div><div class="integration-name">PayPal</div><div class="integration-badge" aria-label="Supported">✓</div></div><div class="integration-item"><div class="integration-logo">🏦</div><div class="integration-name">Bank Connect</div><div class="integration-badge" aria-label="Supported">✓</div></div><div class="integration-item"><div class="integration-logo">📊</div><div class="integration-name">Google Sheets</div><div class="integration-badge" aria-label="Supported">✓</div></div><div class="integration-item"><div class="integration-logo">📧</div><div class="integration-name">Email</div><div class="integration-badge" aria-label="Supported">✓</div></div></div></div>
+
+<div class="integration-hub"><h3>Bonsai</h3><div class="integration-connects"><div class="integration-item"><div class="integration-logo">💳</div><div class="integration-name">Stripe</div><div class="integration-badge" aria-label="Supported">✓</div></div><div class="integration-item"><div class="integration-logo">💰</div><div class="integration-name">PayPal</div><div class="integration-badge" aria-label="Supported">✓</div></div><div class="integration-item"><div class="integration-logo">📅</div><div class="integration-name">Google Calendar</div><div class="integration-badge" aria-label="Supported">✓</div></div><div class="integration-item"><div class="integration-logo">⚡</div><div class="integration-name">Zapier</div><div class="integration-badge" aria-label="Supported">✓</div></div><div class="integration-item"><div class="integration-logo">📝</div><div class="integration-name">QuickBooks</div><div class="integration-badge" aria-label="Supported">✓</div></div></div></div>
+</div>
+</div>
+
+<h2 id="comparison" style="margin-bottom:30px;font-weight:800;font-size:1.8em">📊 Smart Comparison Matrix</h2>
+<div class="table-container">
+<table><thead><tr><th>Tool</th><th>Cost Model</th><th>Killer Feature</th><th>Efficiency Score</th></tr></thead><tbody><tr><td><strong style="font-size:1.1em">FreshBooks</strong><br><span style="font-size:.8em;color:var(--text-muted)">The Pro Standard</span></td><td><span style="color:#fbbf24;background:rgba(251,191,36,.1);padding:4px 8px;border-radius:4px;font-size:.9em">$19/mo</span></td><td>🤖 <strong>Auto-Chase</strong><br><span style="font-size:.85em;opacity:.8">Chases late payments automatically</span></td><td><div style="display:flex;align-items:center;gap:10px"><div style="flex-grow:1;background:rgba(255,255,255,.1);height:6px;border-radius:10px;overflow:hidden" role="progressbar" aria-valuenow="98" aria-valuemin="0" aria-valuemax="100"><div style="width:98%;background:var(--success);height:100%"></div></div><span style="font-size:.9em;font-weight:bold">9.8</span></div></td></tr><tr><td><strong style="font-size:1.1em">Wave</strong><br><span style="font-size:.8em;color:var(--text-muted)">Zero Cost</span></td><td><span style="color:var(--success);background:rgba(52,211,153,.1);padding:4px 8px;border-radius:4px;font-size:.9em">Free Forever</span></td><td>💸 <strong>Free Banking</strong><br><span style="font-size:.85em;opacity:.8">Invoicing & Accounting combined</span></td><td><div style="display:flex;align-items:center;gap:10px"><div style="flex-grow:1;background:rgba(255,255,255,.1);height:6px;border-radius:10px;overflow:hidden" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"><div style="width:85%;background:var(--accent);height:100%"></div></div><span style="font-size:.9em;font-weight:bold">8.5</span></div></td></tr><tr><td><strong style="font-size:1.1em">Bonsai</strong><br><span style="font-size:.8em;color:var(--text-muted)">The Suite</span></td><td><span style="color:#fbbf24;background:rgba(251,191,36,.1);padding:4px 8px;border-radius:4px;font-size:.9em">$17/mo</span></td><td>📝 <strong>Smart Contracts</strong><br><span style="font-size:.85em;opacity:.8">Integrated legal contracts</span></td><td><div style="display:flex;align-items:center;gap:10px"><div style="flex-grow:1;background:rgba(255,255,255,.1);height:6px;border-radius:10px;overflow:hidden" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"><div style="width:95%;background:var(--success);height:100%"></div></div><span style="font-size:.9em;font-weight:bold">9.5</span></div></td></tr></tbody></table>
+</div>
+
+<div class="faq-enhanced" id="faq">
+<h2 style="text-align:center;margin-bottom:40px;font-weight:800;font-size:1.8em">❓ Frequently Asked Questions</h2>
+<div class="faq-search-wrapper"><span class="faq-search-icon" aria-hidden="true">🔍</span><input type="text" class="faq-search" id="faqSearch" placeholder="Search your question..." oninput="filterFAQ()" aria-label="Search FAQ"><span class="faq-clear-icon" id="faqClear" onclick="clearFAQSearch()" role="button" aria-label="Clear search">✕</span></div>
+
+<div class="faq-categories"><button class="faq-cat-btn active" onclick="filterFAQCategory('all')" aria-pressed="true">All</button><button class="faq-cat-btn" onclick="filterFAQCategory('cost')" aria-pressed="false">💰 Cost</button><button class="faq-cat-btn" onclick="filterFAQCategory('security')" aria-pressed="false">🔒 Security</button><button class="faq-cat-btn" onclick="filterFAQCategory('features')" aria-pressed="false">⚙️ Features</button><button class="faq-cat-btn" onclick="filterFAQCategory('setup')" aria-pressed="false">🚀 Setup</button><button class="faq-cat-btn" onclick="filterFAQCategory('international')" aria-pressed="false">🌐 International</button></div>
+
+<div class="faq-group" data-category="cost">
+<div class="faq-group-title"><span>💰</span><span>Cost & Billing</span></div>
+
+<div class="faq-item-enhanced" data-keywords="ai invoicing need required">
+<div class="faq-question-enhanced" onclick="toggleFaqEnhanced(this)" role="button" aria-expanded="false" tabindex="0">
+<div class="faq-question-icon"><span class="faq-emoji" aria-hidden="true">🤖</span><span>Do I really need AI for invoicing?</span></div>
+<div class="faq-toggle" aria-hidden="true">▼</div>
+</div>
+<div class="faq-answer-enhanced">Yes! AI reduces admin time by ~80% and ensures you get paid faster via auto-reminders. Most freelancers save 10-15 hours per month.</div>
+</div>
+
+<div class="faq-item-enhanced" data-keywords="cost limit exceed overage">
+<div class="faq-question-enhanced" onclick="toggleFaqEnhanced(this)" role="button" aria-expanded="false" tabindex="0">
+<div class="faq-question-icon"><span class="faq-emoji" aria-hidden="true">📈</span><span>What happens if I exceed my limit?</span></div>
+<div class="faq-toggle" aria-hidden="true">▼</div>
+</div>
+<div class="faq-answer-enhanced">Most tools offer smooth upgrades without hard limits. You'll get a notification and can upgrade flexibly - no sudden shutdowns.</div>
+</div>
+
+<div class="faq-item-enhanced" data-keywords="discount student startup cheap">
+<div class="faq-question-enhanced" onclick="toggleFaqEnhanced(this)" role="button" aria-expanded="false" tabindex="0">
+<div class="faq-question-icon"><span class="faq-emoji" aria-hidden="true">🎓</span><span>Are there student/startup discounts?</span></div>
+<div class="faq-toggle" aria-hidden="true">▼</div>
+</div>
+<div class="faq-answer-enhanced">Yes! Many tools (especially FreshBooks and Bonsai) offer up to 50% discount for students and early-stage startups. Just ask support.</div>
+</div>
+
+<div class="faq-item-enhanced" data-keywords="switch plan upgrade downgrade">
+<div class="faq-question-enhanced" onclick="toggleFaqEnhanced(this)" role="button" aria-expanded="false" tabindex="0">
+<div class="faq-question-icon"><span class="faq-emoji" aria-hidden="true">🔄</span><span>Can I switch between plans?</span></div>
+<div class="faq-toggle" aria-hidden="true">▼</div>
+</div>
+<div class="faq-answer-enhanced">Anytime! All featured tools allow monthly switching. Upgrades are immediate, downgrades usually take effect at the next billing cycle.</div>
+</div>
+
+<div class="faq-item-enhanced" data-keywords="cancel subscription data retention">
+<div class="faq-question-enhanced" onclick="toggleFaqEnhanced(this)" role="button" aria-expanded="false" tabindex="0">
+<div class="faq-question-icon"><span class="faq-emoji" aria-hidden="true">❌</span><span>What happens when I cancel?</span></div>
+<div class="faq-toggle" aria-hidden="true">▼</div>
+</div>
+<div class="faq-answer-enhanced">Your data typically remains available for 90 days for export. After that, it's deleted. Make sure to backup all invoices as PDF/CSV beforehand.</div>
+</div>
+</div>
+
+<div class="faq-group" data-category="security">
+<div class="faq-group-title"><span>🔒</span><span>Security & Privacy</span></div>
+
+<div class="faq-item-enhanced" data-keywords="security data safe encryption">
+<div class="faq-question-enhanced" onclick="toggleFaqEnhanced(this)" role="button" aria-expanded="false" tabindex="0">
+<div class="faq-question-icon"><span class="faq-emoji" aria-hidden="true">🛡️</span><span>Is my customer data safe?</span></div>
+<div class="faq-toggle" aria-hidden="true">▼</div>
+</div>
+<div class="faq-answer-enhanced">Yes! All major tools use bank-level encryption (256-bit SSL). Your data is as secure as online banking.</div>
+</div>
+
+<div class="faq-item-enhanced" data-keywords="server location gdpr europe">
+<div class="faq-question-enhanced" onclick="toggleFaqEnhanced(this)" role="button" aria-expanded="false" tabindex="0">
+<div class="faq-question-icon"><span class="faq-emoji" aria-hidden="true">🌍</span><span>Where is data stored?</span></div>
+<div class="faq-toggle" aria-hidden="true">▼</div>
+</div>
+<div class="faq-answer-enhanced">Most tools offer EU servers (GDPR compliant). Wave and FreshBooks have dedicated European data centers. Check during setup.</div>
+</div>
+
+<div class="faq-item-enhanced" data-keywords="export data portability csv pdf">
+<div class="faq-question-enhanced" onclick="toggleFaqEnhanced(this)" role="button" aria-expanded="false" tabindex="0">
+<div class="faq-question-icon"><span class="faq-emoji" aria-hidden="true">💾</span><span>Can I export my data?</span></div>
+<div class="faq-toggle" aria-hidden="true">▼</div>
+</div>
+<div class="faq-answer-enhanced">Yes! All tools allow export in CSV, PDF, and often XML. You're never locked in and can switch to another system anytime.</div>
+</div>
+
+<div class="faq-item-enhanced" data-keywords="downtime server crash backup uptime">
+<div class="faq-question-enhanced" onclick="toggleFaqEnhanced(this)" role="button" aria-expanded="false" tabindex="0">
+<div class="faq-question-icon"><span class="faq-emoji" aria-hidden="true">⚡</span><span>What about server downtime?</span></div>
+<div class="faq-toggle" aria-hidden="true">▼</div>
+</div>
+<div class="faq-answer-enhanced">Premium tools guarantee 99.9% uptime with automatic backups. Your invoices are redundantly stored and never lost.</div>
+</div>
+</div>
+
+<div class="faq-group" data-category="features">
+<div class="faq-group-title"><span>⚙️</span><span>Features & Functionality</span></div>
+
+<div class="faq-item-enhanced" data-keywords="multilingual language translation">
+<div class="faq-question-enhanced" onclick="toggleFaqEnhanced(this)" role="button" aria-expanded="false" tabindex="0">
+<div class="faq-question-icon"><span class="faq-emoji" aria-hidden="true">🗣️</span><span>Can I create invoices in multiple languages?</span></div>
+<div class="faq-toggle" aria-hidden="true">▼</div>
+</div>
+<div class="faq-answer-enhanced">Yes! Most tools support 15+ languages. Zoho Invoice excels here with automatic template translation.</div>
+</div>
+
+<div class="faq-item-enhanced" data-keywords="offline mobile app ios android">
+<div class="faq-question-enhanced" onclick="toggleFaqEnhanced(this)" role="button" aria-expanded="false" tabindex="0">
+<div class="faq-question-icon"><span class="faq-emoji" aria-hidden="true">📱</span><span>Can I work offline?</span></div>
+<div class="faq-toggle" aria-hidden="true">▼</div>
+</div>
+<div class="faq-answer-enhanced">Yes! FreshBooks, Invoyce, and Bonsai offer native mobile apps with offline mode. Changes sync automatically when you're back online.</div>
+</div>
+
+<div class="faq-item-enhanced" data-keywords="recurring subscription invoices automatic">
+<div class="faq-question-enhanced" onclick="toggleFaqEnhanced(this)" role="button" aria-expanded="false" tabindex="0">
+<div class="faq-question-icon"><span class="faq-emoji" aria-hidden="true">🔁</span><span>Can I automate recurring invoices?</span></div>
+<div class="faq-toggle" aria-hidden="true">▼</div>
+</div>
+<div class="faq-answer-enhanced">Absolutely! Set up monthly/yearly invoices once and the system sends them automatically. Perfect for retainers and subscriptions.</div>
+</div>
+</div>
+
+<div class="faq-no-results" id="faqNoResults">
+<h3 style="margin-bottom:15px">🔍 No results found</h3>
+<p>Try different keywords or <span onclick="clearFAQSearch()" style="color:var(--accent);cursor:pointer;text-decoration:underline">reset your search</span></p>
+</div>
+
+<div class="faq-cta-box">
+<h3>Still have questions?</h3>
+<p>Most tools offer free trials. Test them risk-free and see which fits your workflow best!</p>
+<a href="#tools-grid" style="display:inline-block;background:var(--accent);color:#0f172a;padding:12px 30px;border-radius:50px;text-decoration:none;font-weight:700;transition:all .3s">Compare Tools Now</a>
+</div>
+</div>
+
+<footer>
+<p>© 2026 AI Invoicing Tools Comparison | <a href="mailto:contact@example.com">Contact</a> | <a href="/privacy">Privacy Policy</a></p>
+<p style="margin-top:10px;font-size:0.85em;opacity:0.7">Affiliate Disclaimer: We may earn a commission from tool sign-ups at no extra cost to you.</p>
+</footer>
+
+</div>
+
+<!-- 🔥 SCRIPT am Ende der Seite, damit DOM sicher geladen ist -->
+<script>
+// --- Navigation Animation Helper ---
+function animateButton(btn) {
+    if(!btn) return;
+    
+    // Klasse hinzufügen für sofortige Farbe
+    btn.classList.add('clicked');
+    
+    // Nach kurzer Zeit entfernen, damit der langsame Fade-Out startet
+    setTimeout(() => {
+        btn.classList.remove('clicked');
+    }, 150); // 150ms Anzeigedauer
+}
+
+// 2. Navigation Logic
+function getSections() {
+    const elements = document.querySelectorAll('.hero, .calc-widget, .mistakes-box, .industry-section, .quiz-section, .timeline-section, .cards, .integration-section, .table-container, .faq-enhanced, footer');
+    return Array.from(elements)
+        .filter(el => el.offsetHeight > 0)
+        .sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+}
+
+function scrollToTop(btn) {
+    animateButton(btn);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function scrollToNext(btn) {
+    animateButton(btn);
+    const sections = getSections();
+    const nextSection = sections.find(section => {
+        const rect = section.getBoundingClientRect();
+        return rect.top > 150; 
+    });
+
+    if (nextSection) {
+        const top = nextSection.getBoundingClientRect().top + window.scrollY - 50;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+}
+
+function scrollToPrev(btn) {
+    animateButton(btn);
+    const sections = getSections();
+    const prevSection = [...sections].reverse().find(section => {
+        const rect = section.getBoundingClientRect();
+        return rect.top < -150;
+    });
+
+    if (prevSection) {
+        const top = prevSection.getBoundingClientRect().top + window.scrollY - 50;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+    } else {
+        scrollToTop(null); // Kein Button-Objekt nötig beim Fallback
+    }
+}
+
+// Scroll-To-Section Helper (für die Pills)
+function scrollToSection(id) {
+    const element = document.getElementById(id);
+    if(element) {
+        element.scrollIntoView({behavior: 'smooth', block: 'start'});
+    }
+}
+
+// 3. Force Scroll to Top ON LOAD
+// Wir führen das erst aus, wenn das Dokument bereit ist.
+document.addEventListener("DOMContentLoaded", function() {
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+    // Kurze Verzögerung, um sicherzustellen, dass der Browser das Layout fertig hat
+    setTimeout(function() {
+        window.scrollTo(0, 0);
+    }, 10);
+});
+
+// Calculator Update
+function updateCalc() {
+  const val = parseInt(document.getElementById('invoiceRange').value);
+  document.getElementById('invoiceCount').textContent = val;
+  const hours = Math.round(val * 2.3);
+  document.getElementById('hoursSaved').textContent = hours;
+  const money = hours * 75;
+  document.getElementById('moneySaved').textContent = '$' + money.toLocaleString();
+}
+
+// Quiz System
+function runQuiz(type, btn) {
+  document.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  
+  const rec = document.getElementById('recommendation');
+  rec.style.display = 'block';
+  
+  const recommendations = {
+    starter: {
+      title: '🎯 Perfect Match: Wave',
+      text: '100% free forever. No credit card needed. Unlimited invoices. Perfect for getting started without any financial commitment.',
+      link: 'https://waveapps.com/',
+      tool: 'Wave'
+    },
+    pro: {
+      title: '🎯 Perfect Match: FreshBooks',
+      text: 'Best automation features. Auto-reminders, time tracking, and professional client portals. Scale your business efficiently.',
+      link: 'https://freshbooks.com/',
+      tool: 'FreshBooks'
+    },
+    nomad: {
+      title: '🎯 Perfect Match: Invoyce',
+      text: 'Mobile-first design. Create invoices from anywhere on your phone. Perfect for life on the road.',
+      link: 'https://invoyce.ai/',
+      tool: 'Invoyce'
+    },
+    intl: {
+      title: '🎯 Perfect Match: Zoho Invoice',
+      text: 'Multi-currency support. Works in 150+ countries. GDPR compliant. Perfect for international freelancers.',
+      link: 'https://zoho.com/invoice/',
+      tool: 'Zoho Invoice'
+    }
+  };
+  
+  const choice = recommendations[type];
+  document.getElementById('rec-title').textContent = choice.title;
+  document.getElementById('rec-text').textContent = choice.text;
+  document.getElementById('rec-link').href = choice.link;
+  
+  setTimeout(() => {
+    rec.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+  }, 100);
+}
+
+// Sort Cards
+function sortCards(type) {
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active-sort'));
+  event.target.classList.add('active-sort');
+  
+  const grid = document.getElementById('tools-grid');
+  const cards = Array.from(grid.children);
+  
+  cards.sort((a, b) => {
+    if(type === 'rating') {
+      return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
+    }
+    if(type === 'price') {
+      return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+    }
+    return 0;
+  });
+  
+  cards.forEach(card => grid.appendChild(card));
+}
+
+// FAQ Toggle
+function toggleFaqEnhanced(element) {
+  const item = element.closest('.faq-item-enhanced');
+  const wasOpen = item.classList.contains('open');
+  
+  document.querySelectorAll('.faq-item-enhanced').forEach(i => {
+    i.classList.remove('open');
+    const btn = i.querySelector('.faq-question-enhanced');
+    if(btn) btn.setAttribute('aria-expanded', 'false');
+  });
+  
+  if(!wasOpen) {
+    item.classList.add('open');
+    element.setAttribute('aria-expanded', 'true');
+  }
+}
+
+// FAQ Search
+function filterFAQ() {
+  const searchTerm = document.getElementById('faqSearch').value.toLowerCase();
+  const clearIcon = document.getElementById('faqClear');
+  const noResults = document.getElementById('faqNoResults');
+  
+  clearIcon.style.display = searchTerm ? 'block' : 'none';
+  
+  const items = document.querySelectorAll('.faq-item-enhanced');
+  let visibleCount = 0;
+  
+  items.forEach(item => {
+    const question = item.querySelector('.faq-question-icon span:last-child').textContent.toLowerCase();
+    const answer = item.querySelector('.faq-answer-enhanced').textContent.toLowerCase();
+    const keywords = (item.dataset.keywords || '').toLowerCase();
+    
+    const matches = question.includes(searchTerm) || answer.includes(searchTerm) || keywords.includes(searchTerm);
+    
+    if(matches || searchTerm === '') {
+      item.style.display = 'block';
+      visibleCount++;
+    } else {
+      item.style.display = 'none';
+    }
+  });
+  
+  if(visibleCount === 0 && searchTerm) {
+    noResults.classList.add('show');
+    document.querySelectorAll('.faq-group').forEach(g => g.style.display = 'none');
+  } else {
+    noResults.classList.remove('show');
+    document.querySelectorAll('.faq-group').forEach(g => g.style.display = 'block');
+  }
+}
+
+function clearFAQSearch() {
+  document.getElementById('faqSearch').value = '';
+  document.getElementById('faqClear').style.display = 'none';
+  filterFAQ();
+}
+
+function filterFAQCategory(category) {
+  document.querySelectorAll('.faq-cat-btn').forEach(btn => {
+    btn.classList.remove('active');
+    btn.setAttribute('aria-pressed', 'false');
+  });
+  event.target.classList.add('active');
+  event.target.setAttribute('aria-pressed', 'true');
+  
+  const groups = document.querySelectorAll('.faq-group');
+  groups.forEach(group => {
+    if(category === 'all' || group.dataset.category === category) {
+      group.style.display = 'block';
+    } else {
+      group.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>
