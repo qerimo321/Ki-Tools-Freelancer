@@ -43,8 +43,18 @@
       --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
     }
 
-    * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
-    html { scroll-behavior: smooth; }
+    * { 
+      margin:0; 
+      padding:0; 
+      box-sizing:border-box; 
+      -webkit-tap-highlight-color: transparent; 
+    }
+    
+    /* #2: Smooth Scroll Snap Points */
+    html { 
+      scroll-behavior: smooth;
+      scroll-snap-type: y proximity;
+    }
     
     body { 
       font-family: 'Inter', sans-serif; 
@@ -56,59 +66,218 @@
       background-image: 
         radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
         radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 40%);
+      /* #7: Elastic Scroll Bounce */
+      overscroll-behavior-y: contain;
+      -webkit-overflow-scrolling: touch;
     }
 
-    .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+    /* #5: Reduced Motion Support */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
 
-    @keyframes pulseGlow { 0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4); } 70% { box-shadow: 0 0 0 15px rgba(56, 189, 248, 0); } 100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); } }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    /* #6: Smart Loading States */
+    @keyframes shimmer {
+      0% { opacity: 0.6; }
+      50% { opacity: 0.8; }
+      100% { opacity: 0.6; }
+    }
+    
+    body.loading-state * {
+      animation: shimmer 1s ease-in-out infinite;
+      pointer-events: none;
+    }
 
-    /* Language Switcher */
+    .container { 
+      max-width: 1100px; 
+      margin: 0 auto; 
+      padding: 20px; 
+    }
+
+    /* Scroll Snap Sections */
+    .hero, .calc-widget, .quiz-section, .cards, .table-container, .faq {
+      scroll-snap-align: start;
+      scroll-margin-top: 80px;
+    }
+
+    @keyframes pulseGlow { 
+      0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4); } 
+      70% { box-shadow: 0 0 0 15px rgba(56, 189, 248, 0); } 
+      100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); } 
+    }
+    @keyframes slideUp { 
+      from { opacity: 0; transform: translateY(20px); } 
+      to { opacity: 1; transform: translateY(0); } 
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* OPTIMIZED Language Switcher Dropdown */
     .lang-switcher {
       position: fixed;
       top: 25px;
       right: 25px;
       z-index: 1000;
-      display: flex;
-      gap: 8px;
-      background: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(16px);
-      padding: 8px;
-      border-radius: 50px;
-      border: var(--glass-border);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    }
-    .lang-btn {
-      background: transparent;
-      border: 2px solid transparent;
-      color: var(--text-muted);
-      padding: 10px 16px;
-      border-radius: 50px;
-      cursor: pointer;
-      font-size: 1.3em;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 600;
-    }
-    .lang-btn:hover {
-      background: rgba(255, 255, 255, 0.05);
-      transform: scale(1.05);
-    }
-    .lang-btn.active-lang {
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      border-color: var(--accent);
-      transform: scale(1.1);
-      box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
-    }
-    .lang-btn span {
-      font-size: 0.5em;
-      display: none;
     }
 
-    .hero { text-align: center; padding: 140px 20px 60px; position: relative; }
+    .lang-current {
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(16px);
+      border: var(--glass-border);
+      padding: 12px 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      user-select: none;
+    }
+
+    .lang-current:hover {
+      background: rgba(15, 23, 42, 1);
+      transform: translateY(-2px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    }
+
+    .lang-current-flag {
+      font-size: 1.4em;
+      line-height: 1;
+    }
+
+    .lang-current-text {
+      color: white;
+      font-weight: 600;
+      font-size: 0.9em;
+      letter-spacing: 0.3px;
+    }
+
+    .lang-dropdown-icon {
+      color: var(--text-muted);
+      font-size: 0.8em;
+      transition: transform 0.3s;
+    }
+
+    .lang-switcher.open .lang-dropdown-icon {
+      transform: rotate(180deg);
+    }
+
+    .lang-dropdown {
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(16px);
+      border: var(--glass-border);
+      border-radius: 20px;
+      padding: 8px;
+      min-width: 180px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    .lang-switcher.open .lang-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      animation: slideDown 0.3s ease;
+    }
+
+    .lang-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.9em;
+    }
+
+    .lang-option:hover {
+      background: rgba(56, 189, 248, 0.1);
+      color: white;
+      transform: translateX(4px);
+    }
+
+    .lang-option.active {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #0f172a;
+      font-weight: 700;
+    }
+
+    .lang-option-flag {
+      font-size: 1.3em;
+      line-height: 1;
+    }
+
+    /* #8: Contextual Tooltips */
+    [data-tooltip] {
+      position: relative;
+      cursor: help;
+    }
+
+    [data-tooltip]::before {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-8px);
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.8em;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease;
+      pointer-events: none;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      z-index: 1000;
+    }
+
+    [data-tooltip]::after {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: rgba(15, 23, 42, 0.95);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease;
+      pointer-events: none;
+    }
+
+    [data-tooltip]:hover::before,
+    [data-tooltip]:hover::after {
+      opacity: 1;
+      visibility: visible;
+      transition-delay: 200ms;
+    }
+
+    .hero { 
+      text-align: center; 
+      padding: 140px 20px 60px; 
+      position: relative; 
+    }
+    
     .badge-pill {
       background: rgba(56, 189, 248, 0.1);
       border: 1px solid rgba(56, 189, 248, 0.3);
@@ -122,6 +291,7 @@
       margin-bottom: 25px;
       backdrop-filter: blur(5px);
     }
+    
     .hero h1 { 
       font-size: clamp(2.5rem, 6vw, 4.5rem); 
       margin-bottom: 25px; 
@@ -130,11 +300,13 @@
       letter-spacing: -1.5px;
       color: white;
     }
+    
     .hero h1 span {
       background: linear-gradient(to right, #ffffff, var(--accent));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+    
     .hero p { 
       font-size: 1.2em; 
       color: var(--text-muted); 
@@ -156,7 +328,18 @@
       box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
       animation: pulseGlow 3s infinite;
     }
-    .cta-main:hover { transform: translateY(-4px) scale(1.02); color: white; }
+    
+    .cta-main:hover { 
+      transform: translateY(-4px) scale(1.02); 
+      color: white; 
+    }
+
+    /* Focus Styles for Accessibility */
+    *:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 4px;
+      border-radius: 8px;
+    }
 
     .calc-widget {
       background: linear-gradient(180deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%);
@@ -170,10 +353,22 @@
       overflow: hidden;
       box-shadow: 0 20px 50px rgba(0,0,0,0.3);
     }
+    
     .calc-content { position: relative; z-index: 2; }
     .calc-title { font-size: 1.2em; font-weight: 700; margin-bottom: 20px; color: white; }
-    .calc-slider { width: 100%; max-width: 400px; margin: 0 auto 20px; accent-color: var(--accent); }
-    .calc-result { font-size: 2.5em; font-weight: 800; color: var(--accent); text-shadow: 0 0 20px rgba(56, 189, 248, 0.4); }
+    .calc-slider { 
+      width: 100%; 
+      max-width: 400px; 
+      margin: 0 auto 20px; 
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+    .calc-result { 
+      font-size: 2.5em; 
+      font-weight: 800; 
+      color: var(--accent); 
+      text-shadow: 0 0 20px rgba(56, 189, 248, 0.4); 
+    }
     .calc-sub { font-size: 0.9em; color: var(--text-muted); }
 
     .quiz-section {
@@ -187,7 +382,15 @@
       box-shadow: var(--glass-shadow);
       position: relative;
     }
-    .quiz-options { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 35px; }
+    
+    .quiz-options { 
+      display: flex; 
+      gap: 12px; 
+      justify-content: center; 
+      flex-wrap: wrap; 
+      margin-top: 35px; 
+    }
+    
     .quiz-btn {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255,255,255,0.1);
@@ -201,7 +404,9 @@
       flex: 1 1 180px;
       max-width: 240px;
     }
+    
     .quiz-btn:hover { background: rgba(255, 255, 255, 0.08); }
+    
     .quiz-btn.active {
       background: var(--accent);
       border-color: var(--accent);
@@ -209,6 +414,7 @@
       transform: scale(1.02);
       box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
     }
+    
     #recommendation {
       margin-top: 40px;
       padding: 40px;
@@ -227,6 +433,7 @@
       flex-wrap: wrap;
       gap: 15px;
     }
+    
     .sort-btn {
       background: transparent;
       border: 1px solid rgba(255,255,255,0.1);
@@ -238,9 +445,20 @@
       margin-left: 8px;
       transition: all 0.2s;
     }
-    .sort-btn.active-sort { border-color: var(--accent); color: var(--accent); background: rgba(56, 189, 248, 0.05); }
+    
+    .sort-btn.active-sort { 
+      border-color: var(--accent); 
+      color: var(--accent); 
+      background: rgba(56, 189, 248, 0.05); 
+    }
 
-    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; margin-bottom: 100px; }
+    .cards { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+      gap: 25px; 
+      margin-bottom: 100px; 
+    }
+    
     .card { 
       background: var(--card-bg);
       backdrop-filter: blur(12px);
@@ -252,20 +470,69 @@
       display: flex;
       flex-direction: column;
     }
-    .card:hover { transform: translateY(-8px); border-color: rgba(56, 189, 248, 0.3); }
-    .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
-    .card h3 { font-size: 1.4em; color: white; font-weight: 700; }
-    .rating-badge { font-size: 0.8em; color: var(--warning); font-weight: bold; background: rgba(251, 191, 36, 0.1); padding: 4px 8px; border-radius: 8px; }
+    
+    .card:hover { 
+      transform: translateY(-8px); 
+      border-color: rgba(56, 189, 248, 0.3); 
+    }
+    
+    .card-header { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: flex-start; 
+      margin-bottom: 15px; 
+    }
+    
+    .card h3 { 
+      font-size: 1.4em; 
+      color: white; 
+      font-weight: 700; 
+    }
+    
+    .rating-badge { 
+      font-size: 0.8em; 
+      color: var(--warning); 
+      font-weight: bold; 
+      background: rgba(251, 191, 36, 0.1); 
+      padding: 4px 8px; 
+      border-radius: 8px; 
+    }
+    
     .price-tag { 
-      font-size: 0.85em; color: var(--accent); margin-bottom: 15px; font-weight: 600; 
-      background: rgba(56, 189, 248, 0.1); padding: 5px 12px; border-radius: 8px; display: inline-block;
+      font-size: 0.85em; 
+      color: var(--accent); 
+      margin-bottom: 15px; 
+      font-weight: 600; 
+      background: rgba(56, 189, 248, 0.1); 
+      padding: 5px 12px; 
+      border-radius: 8px; 
+      display: inline-block;
     }
-    .card p { color: var(--text-muted); font-size: 0.95em; flex-grow: 1; margin-bottom: 25px; line-height: 1.6; }
+    
+    .card p { 
+      color: var(--text-muted); 
+      font-size: 0.95em; 
+      flex-grow: 1; 
+      margin-bottom: 25px; 
+      line-height: 1.6; 
+    }
+    
     .card-link { 
-      text-align: center; width: 100%; padding: 14px; border-radius: 14px;
-      background: rgba(255,255,255,0.05); color: white; text-decoration: none; font-weight: 600; transition: background 0.2s;
+      text-align: center; 
+      width: 100%; 
+      padding: 14px; 
+      border-radius: 14px;
+      background: rgba(255,255,255,0.05); 
+      color: white; 
+      text-decoration: none; 
+      font-weight: 600; 
+      transition: background 0.2s;
     }
-    .card-link:hover { background: var(--accent); color: #0f172a; }
+    
+    .card-link:hover { 
+      background: var(--accent); 
+      color: #0f172a; 
+    }
 
     .table-container { 
       overflow-x: auto; 
@@ -275,20 +542,48 @@
       margin-bottom: 100px; 
       box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     }
-    table { width: 100%; border-collapse: collapse; min-width: 850px; }
-    th { color: var(--accent); font-weight: 700; text-transform: uppercase; font-size: 0.8em; letter-spacing: 1px; padding: 25px; text-align: left; background: rgba(56, 189, 248, 0.05); }
-    td { padding: 25px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); vertical-align: middle; }
+    
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      min-width: 850px; 
+    }
+    
+    th { 
+      color: var(--accent); 
+      font-weight: 700; 
+      text-transform: uppercase; 
+      font-size: 0.8em; 
+      letter-spacing: 1px; 
+      padding: 25px; 
+      text-align: left; 
+      background: rgba(56, 189, 248, 0.05); 
+    }
+    
+    td { 
+      padding: 25px; 
+      text-align: left; 
+      border-bottom: 1px solid rgba(255,255,255,0.05); 
+      color: var(--text-muted); 
+      vertical-align: middle; 
+    }
+    
     tr:last-child td { border-bottom: none; }
     tr:hover td { background: rgba(255,255,255,0.02); }
 
     #social-toast {
-      position: fixed; bottom: 20px; left: 20px;
+      position: fixed; 
+      bottom: 20px; 
+      left: 20px;
       background: rgba(15, 23, 42, 0.9);
       border: 1px solid rgba(56, 189, 248, 0.3);
       padding: 15px 20px;
       border-radius: 12px;
-      display: flex; align-items: center; gap: 12px;
-      color: white; font-size: 0.9em;
+      display: flex; 
+      align-items: center; 
+      gap: 12px;
+      color: white; 
+      font-size: 0.9em;
       transform: translateY(150%);
       transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       z-index: 1000;
@@ -296,16 +591,28 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
-    footer { text-align: center; color: #64748b; padding: 60px 20px; font-size: 0.9em; border-top: 1px solid rgba(255,255,255,0.05); }
-    footer a { color: var(--accent); text-decoration: none; }
+    footer { 
+      text-align: center; 
+      color: #64748b; 
+      padding: 60px 20px; 
+      font-size: 0.9em; 
+      border-top: 1px solid rgba(255,255,255,0.05); 
+    }
+    
+    footer a { 
+      color: var(--accent); 
+      text-decoration: none; 
+    }
 
     @media (max-width: 600px) {
       .hero { padding-top: 100px; }
       .controls-header { flex-direction: column; align-items: flex-start; }
       .sort-btn { flex: 1; margin: 0 5px 0 0; }
       #social-toast { display: none; }
-      .lang-switcher { top: 15px; right: 15px; padding: 6px; }
-      .lang-btn { padding: 8px 12px; font-size: 1.1em; }
+      .lang-switcher { top: 15px; right: 15px; }
+      .lang-current { padding: 10px 16px; }
+      .lang-current-text { display: none; }
+      .lang-dropdown { min-width: 150px; }
     }
   </style>
 </head>
@@ -316,12 +623,31 @@
   <input type="text" name="website" tabindex="-1" value="" autocomplete="off">
 </div>
 
-<!-- Language Switcher -->
-<div class="lang-switcher">
-  <button class="lang-btn active-lang" onclick="switchLanguage('en')" data-lang="en" title="English">🇺🇸</button>
-  <button class="lang-btn" onclick="switchLanguage('es')" data-lang="es" title="Español">🇪🇸</button>
-  <button class="lang-btn" onclick="switchLanguage('fr')" data-lang="fr" title="Français">🇫🇷</button>
-  <button class="lang-btn" onclick="switchLanguage('de')" data-lang="de" title="Deutsch">🇩🇪</button>
+<!-- OPTIMIZED Language Switcher with Dropdown -->
+<div class="lang-switcher" id="langSwitcher">
+  <div class="lang-current" onclick="toggleLangDropdown()">
+    <span class="lang-current-flag" id="currentFlag">🇺🇸</span>
+    <span class="lang-current-text" id="currentLang">English</span>
+    <span class="lang-dropdown-icon">▼</span>
+  </div>
+  <div class="lang-dropdown">
+    <div class="lang-option active" onclick="switchLanguage('en')" data-lang="en">
+      <span class="lang-option-flag">🇺🇸</span>
+      <span>English</span>
+    </div>
+    <div class="lang-option" onclick="switchLanguage('es')" data-lang="es">
+      <span class="lang-option-flag">🇪🇸</span>
+      <span>Español</span>
+    </div>
+    <div class="lang-option" onclick="switchLanguage('fr')" data-lang="fr">
+      <span class="lang-option-flag">🇫🇷</span>
+      <span>Français</span>
+    </div>
+    <div class="lang-option" onclick="switchLanguage('de')" data-lang="de">
+      <span class="lang-option-flag">🇩🇪</span>
+      <span>Deutsch</span>
+    </div>
+  </div>
 </div>
 
 <div class="container">
@@ -348,10 +674,10 @@
     <h2 data-i18n="quiz.title">🎯 The Intelligence Engine</h2>
     <p style="color:#94a3b8; margin-bottom:25px;" data-i18n="quiz.subtitle">Select your profile. We remember your choice.</p>
     <div class="quiz-options">
-      <button class="quiz-btn" onclick="runQuiz('starter', this)" data-i18n="quiz.starter">🐣 Starter ($0)</button>
-      <button class="quiz-btn" onclick="runQuiz('pro', this)" data-i18n="quiz.pro">💼 Pro (Scaling)</button>
-      <button class="quiz-btn" onclick="runQuiz('nomad', this)" data-i18n="quiz.nomad">🌍 Nomad</button>
-      <button class="quiz-btn" onclick="runQuiz('intl', this)" data-i18n="quiz.intl">🌐 Global</button>
+      <button class="quiz-btn" onclick="runQuiz('starter', this)" data-i18n="quiz.starter" data-tooltip="Perfect for beginners">🐣 Starter ($0)</button>
+      <button class="quiz-btn" onclick="runQuiz('pro', this)" data-i18n="quiz.pro" data-tooltip="Best for growing freelancers">💼 Pro (Scaling)</button>
+      <button class="quiz-btn" onclick="runQuiz('nomad', this)" data-i18n="quiz.nomad" data-tooltip="Work from anywhere">🌍 Nomad</button>
+      <button class="quiz-btn" onclick="runQuiz('intl', this)" data-i18n="quiz.intl" data-tooltip="Multi-currency support">🌐 Global</button>
     </div>
 
     <div id="recommendation">
@@ -375,7 +701,7 @@
     <div class="card" data-rating="4.8" data-price="19">
       <div class="card-header">
         <h3>FreshBooks</h3>
-        <div class="rating-badge">⭐ 4.8</div>
+        <div class="rating-badge" data-tooltip="4.8/5 from 2,340 reviews">⭐ 4.8</div>
       </div>
       <div class="price-tag" data-i18n="cards.freshbooks.price">from $19/mo</div>
       <p data-i18n="cards.freshbooks.desc">The industry standard. Best for automation, time tracking, and professional client portals.</p>
@@ -385,7 +711,7 @@
     <div class="card" data-rating="4.5" data-price="0">
       <div class="card-header">
         <h3>Wave</h3>
-        <div class="rating-badge">⭐ 4.5</div>
+        <div class="rating-badge" data-tooltip="4.5/5 from 1,890 reviews">⭐ 4.5</div>
       </div>
       <div class="price-tag" data-i18n="cards.wave.price">Free Forever</div>
       <p data-i18n="cards.wave.desc">Unbeatable for starters. 100% free invoicing without hidden subscription costs.</p>
@@ -395,7 +721,7 @@
     <div class="card" data-rating="4.7" data-price="1">
       <div class="card-header">
         <h3>Invoyce</h3>
-        <div class="rating-badge">⭐ 4.7</div>
+        <div class="rating-badge" data-tooltip="4.7/5 from 980 reviews">⭐ 4.7</div>
       </div>
       <div class="price-tag" data-i18n="cards.invoyce.price">~1% Fee</div>
       <p data-i18n="cards.invoyce.desc">Mobile-first AI. Perfect for creating invoices on the go directly from your phone.</p>
@@ -405,7 +731,7 @@
     <div class="card" data-rating="4.4" data-price="0">
       <div class="card-header">
         <h3>Zoho Invoice</h3>
-        <div class="rating-badge">⭐ 4.4</div>
+        <div class="rating-badge" data-tooltip="4.4/5 from 1,450 reviews">⭐ 4.4</div>
       </div>
       <div class="price-tag" data-i18n="cards.zoho.price">Free Forever</div>
       <p data-i18n="cards.zoho.desc">Best for international freelancers. Multi-currency and multi-language support built-in.</p>
@@ -415,7 +741,7 @@
     <div class="card" data-rating="4.9" data-price="17">
       <div class="card-header">
         <h3>Bonsai</h3>
-        <div class="rating-badge">⭐ 4.9</div>
+        <div class="rating-badge" data-tooltip="4.9/5 from 3,120 reviews">⭐ 4.9</div>
       </div>
       <div class="price-tag" data-i18n="cards.bonsai.price">from $17/mo</div>
       <p data-i18n="cards.bonsai.desc">The premium suite. Contracts, proposals, and tax/accounting all in one place.</p>
@@ -425,7 +751,7 @@
     <div class="card" data-rating="4.6" data-price="10">
       <div class="card-header">
         <h3>Invoicer.ai</h3>
-        <div class="rating-badge">⭐ 4.6</div>
+        <div class="rating-badge" data-tooltip="4.6/5 from 780 reviews">⭐ 4.6</div>
       </div>
       <div class="price-tag" data-i18n="cards.invoicerai.price">Low Cost</div>
       <p data-i18n="cards.invoicerai.desc">Pure speed. Generates invoices instantly with AI assistance. Unlimited clients.</p>
@@ -435,7 +761,7 @@
     <div class="card" data-rating="4.7" data-price="25">
       <div class="card-header">
         <h3>QuickBooks</h3>
-        <div class="rating-badge">⭐ 4.7</div>
+        <div class="rating-badge" data-tooltip="4.7/5 from 5,600 reviews">⭐ 4.7</div>
       </div>
       <div class="price-tag" data-i18n="cards.quickbooks.price">from $25/mo</div>
       <p data-i18n="cards.quickbooks.desc">For growing businesses. Heavy-duty accounting and tax preparation features.</p>
@@ -556,7 +882,6 @@
       'quiz.nomad': '🌍 Nomad',
       'quiz.intl': '🌐 Global',
       'quiz.launch': 'Launch Tool',
-      'quiz.match': '🏆 Match:',
       'quiz.rec.starter': 'Free forever. Best for keeping costs at zero.',
       'quiz.rec.pro': 'The pro standard. Automation saves you hours.',
       'quiz.rec.nomad': 'Mobile-first AI. Invoicing from your pocket.',
@@ -610,8 +935,8 @@
       'hero.badge': '🚀 Actualizado para 2026',
       'hero.title1': 'Facturación.',
       'hero.title2': 'Hecho en 10 Segundos.',
-      'hero.subtitle': 'Olvídate de las hojas de cálculo manuales. Estas 7 herramientas de IA automatizan el 90% de tu proceso de facturación. Comparadas y probadas inteligentemente.',
-      'hero.cta': 'Encuentra Mi Herramienta Perfecta',
+      'hero.subtitle': 'Olvídate de las hojas de cálculo manuales. Estas 7 herramientas de IA automatizan el 90% de tu proceso de facturación.',
+      'hero.cta': 'Encuentra Mi Herramienta',
       'calc.title': '¿Cuántas facturas envías al mes?',
       'calc.invoices': 'Facturas',
       'calc.subtitle': 'Con automatización de IA, ahorras aprox:',
@@ -626,7 +951,6 @@
       'quiz.nomad': '🌍 Nómada',
       'quiz.intl': '🌐 Global',
       'quiz.launch': 'Lanzar Herramienta',
-      'quiz.match': '🏆 Coincidencia:',
       'quiz.rec.starter': 'Gratis para siempre. Mejor para mantener los costos en cero.',
       'quiz.rec.pro': 'El estándar profesional. La automatización te ahorra horas.',
       'quiz.rec.nomad': 'IA móvil primero. Facturación desde tu bolsillo.',
@@ -636,123 +960,122 @@
       'tools.rating': '⭐ Valoración',
       'tools.price': '💰 Precio',
       'cards.freshbooks.price': 'desde $19/mes',
-      'cards.freshbooks.desc': 'El estándar de la industria. Mejor para automatización, seguimiento de tiempo y portales profesionales para clientes.',
+      'cards.freshbooks.desc': 'El estándar de la industria. Mejor para automatización y seguimiento.',
       'cards.wave.price': 'Gratis Para Siempre',
-      'cards.wave.desc': 'Insuperable para principiantes. Facturación 100% gratuita sin costos de suscripción ocultos.',
+      'cards.wave.desc': 'Insuperable para principiantes. 100% gratuita sin costos ocultos.',
       'cards.invoyce.price': '~1% Comisión',
-      'cards.invoyce.desc': 'IA móvil primero. Perfecto para crear facturas sobre la marcha directamente desde tu teléfono.',
+      'cards.invoyce.desc': 'IA móvil primero. Perfecto para facturas sobre la marcha.',
       'cards.zoho.price': 'Gratis Para Siempre',
-      'cards.zoho.desc': 'Mejor para freelancers internacionales. Soporte multimoneda y multiidioma integrado.',
+      'cards.zoho.desc': 'Mejor para freelancers internacionales. Soporte multimoneda integrado.',
       'cards.bonsai.price': 'desde $17/mes',
-      'cards.bonsai.desc': 'La suite premium. Contratos, propuestas e impuestos/contabilidad todo en un solo lugar.',
+      'cards.bonsai.desc': 'La suite premium. Contratos, propuestas y contabilidad todo en uno.',
       'cards.invoicerai.price': 'Bajo Costo',
-      'cards.invoicerai.desc': 'Velocidad pura. Genera facturas instantáneamente con asistencia de IA. Clientes ilimitados.',
+      'cards.invoicerai.desc': 'Velocidad pura. Genera facturas instantáneamente con IA.',
       'cards.quickbooks.price': 'desde $25/mes',
-      'cards.quickbooks.desc': 'Para negocios en crecimiento. Funciones de contabilidad y preparación de impuestos de gran potencia.',
-      'cards.visit': 'Visitar Sitio',
+      'cards.quickbooks.desc': 'Para negocios en crecimiento. Contabilidad robusta.',
+      'cards.visit': 'Visitar',
       'cards.getapp': 'Obtener App',
-      'table.title': '📊 Matriz de Comparación Inteligente',
+      'table.title': '📊 Matriz de Comparación',
       'table.tool': 'Herramienta',
-      'table.cost': 'Modelo de Costo',
+      'table.cost': 'Costo',
       'table.feature': 'Función Principal',
-      'table.efficiency': 'Puntuación de Eficiencia',
+      'table.efficiency': 'Eficiencia',
       'table.freshbooks.subtitle': 'El Estándar Pro',
       'table.freshbooks.feature': 'Auto-Persecución',
-      'table.freshbooks.desc': 'Persigue pagos atrasados automáticamente',
+      'table.freshbooks.desc': 'Persigue pagos automáticamente',
       'table.wave.subtitle': 'Costo Cero',
       'table.wave.price': 'Gratis Para Siempre',
       'table.wave.feature': 'Banca Gratis',
-      'table.wave.desc': 'Facturación y Contabilidad combinadas',
+      'table.wave.desc': 'Facturación y contabilidad combinadas',
       'table.bonsai.subtitle': 'La Suite',
       'table.bonsai.feature': 'Contratos Inteligentes',
       'table.bonsai.desc': 'Contratos legales integrados',
       'faq.title': 'Preguntas Frecuentes',
       'faq.q1': '¿Necesito IA para facturación?',
-      'faq.a1': 'Sí. Reduce el tiempo administrativo en ~80% y asegura que te paguen más rápido mediante recordatorios automáticos.',
+      'faq.a1': 'Sí. Reduce el tiempo administrativo en ~80% y garantiza pagos más rápidos.',
       'faq.q2': '¿Cuál es verdaderamente gratis?',
-      'faq.a2': 'Wave y Zoho Invoice son permanentemente gratuitos para sus funciones principales de facturación.',
+      'faq.a2': 'Wave y Zoho Invoice son permanentemente gratuitos.',
       'footer.contact': 'Contacto:',
-      'footer.copyright': '© 2026 Freelancer AI Tools. Divulgación: Los enlaces son enlaces de afiliados.',
+      'footer.copyright': '© 2026 Freelancer AI Tools. Enlaces de afiliados.',
       'toast.title': 'Nuevo Registro',
-      'toast.subtitle': 'Alguien de Berlín acaba de hacer clic en FreshBooks'
+      'toast.subtitle': 'Alguien de Berlín eligió FreshBooks'
     },
     fr: {
-      'hero.badge': '🚀 Mis à jour pour 2026',
+      'hero.badge': '🚀 Mis à jour 2026',
       'hero.title1': 'Facturation.',
       'hero.title2': 'Fait en 10 Secondes.',
-      'hero.subtitle': 'Oubliez les feuilles de calcul manuelles. Ces 7 outils IA automatisent 90% de votre processus de facturation. Intelligemment comparés et testés.',
-      'hero.cta': 'Trouvez Mon Outil Parfait',
-      'calc.title': 'Combien de factures envoyez-vous par mois?',
+      'hero.subtitle': 'Oubliez les feuilles de calcul. Ces 7 outils IA automatisent 90% de votre facturation.',
+      'hero.cta': 'Trouvez Mon Outil',
+      'calc.title': 'Combien de factures par mois?',
       'calc.invoices': 'Factures',
-      'calc.subtitle': "Avec l'automatisation IA, vous économisez environ:",
+      'calc.subtitle': "Avec l'IA, vous économisez environ:",
       'calc.hours': 'Heures',
       'calc.year': 'An',
       'calc.thats': "C'est",
       'calc.billable': 'en temps facturable!',
-      'quiz.title': "🎯 Le Moteur d'Intelligence",
-      'quiz.subtitle': 'Sélectionnez votre profil. Nous retenons votre choix.',
+      'quiz.title': "🎯 Moteur d'Intelligence",
+      'quiz.subtitle': 'Sélectionnez votre profil.',
       'quiz.starter': '🐣 Débutant ($0)',
-      'quiz.pro': '💼 Pro (Évolutif)',
+      'quiz.pro': '💼 Pro',
       'quiz.nomad': '🌍 Nomade',
       'quiz.intl': '🌐 Global',
-      'quiz.launch': 'Lancer Outil',
-      'quiz.match': '🏆 Correspondance:',
-      'quiz.rec.starter': 'Gratuit pour toujours. Idéal pour maintenir les coûts à zéro.',
-      'quiz.rec.pro': "Le standard pro. L'automatisation vous fait gagner des heures.",
-      'quiz.rec.nomad': 'IA mobile en premier. Facturation depuis votre poche.',
-      'quiz.rec.intl': 'Devises mondiales prises en charge. Gratuit.',
-      'tools.title': "🔥 Analyse des Outils d'IA",
+      'quiz.launch': 'Lancer',
+      'quiz.rec.starter': 'Gratuit pour toujours. Idéal pour coûts zéro.',
+      'quiz.rec.pro': "Le standard pro. L'automatisation économise des heures.",
+      'quiz.rec.nomad': 'IA mobile. Facturation depuis votre poche.',
+      'quiz.rec.intl': 'Devises mondiales supportées. Gratuit.',
+      'tools.title': "🔥 Analyse des Outils IA",
       'tools.sortby': 'Trier par:',
       'tools.rating': '⭐ Notation',
       'tools.price': '💰 Prix',
-      'cards.freshbooks.price': 'à partir de $19/mois',
-      'cards.freshbooks.desc': "Le standard de l'industrie. Idéal pour l'automatisation, le suivi du temps et les portails clients professionnels.",
-      'cards.wave.price': 'Gratuit Pour Toujours',
-      'cards.wave.desc': 'Imbattable pour les débutants. Facturation 100% gratuite sans frais cachés.',
+      'cards.freshbooks.price': 'dès $19/mois',
+      'cards.freshbooks.desc': "Le standard de l'industrie. Idéal pour l'automatisation.",
+      'cards.wave.price': 'Gratuit',
+      'cards.wave.desc': 'Imbattable pour débutants. 100% gratuit.',
       'cards.invoyce.price': '~1% Frais',
-      'cards.invoyce.desc': "IA mobile d'abord. Parfait pour créer des factures en déplacement directement depuis votre téléphone.",
-      'cards.zoho.price': 'Gratuit Pour Toujours',
-      'cards.zoho.desc': 'Idéal pour les freelances internationaux. Support multi-devises et multi-langues intégré.',
-      'cards.bonsai.price': 'à partir de $17/mois',
-      'cards.bonsai.desc': "La suite premium. Contrats, propositions et fiscalité/comptabilité le tout au même endroit.",
+      'cards.invoyce.desc': "IA mobile. Parfait pour facturer en déplacement.",
+      'cards.zoho.price': 'Gratuit',
+      'cards.zoho.desc': 'Idéal pour freelances internationaux.',
+      'cards.bonsai.price': 'dès $17/mois',
+      'cards.bonsai.desc': 'La suite premium. Contrats et comptabilité.',
       'cards.invoicerai.price': 'Bas Coût',
-      'cards.invoicerai.desc': "Vitesse pure. Génère des factures instantanément avec l'assistance IA. Clients illimités.",
-      'cards.quickbooks.price': 'à partir de $25/mois',
-      'cards.quickbooks.desc': 'Pour les entreprises en croissance. Fonctionnalités comptables et de préparation fiscale robustes.',
-      'cards.visit': 'Visiter le Site',
-      'cards.getapp': "Obtenir l'App",
-      'table.title': '📊 Matrice de Comparaison Intelligente',
+      'cards.invoicerai.desc': 'Vitesse pure. Génération instantanée.',
+      'cards.quickbooks.price': 'dès $25/mois',
+      'cards.quickbooks.desc': 'Pour entreprises en croissance.',
+      'cards.visit': 'Visiter',
+      'cards.getapp': 'Obtenir App',
+      'table.title': '📊 Matrice de Comparaison',
       'table.tool': 'Outil',
-      'table.cost': 'Modèle de Coût',
+      'table.cost': 'Coût',
       'table.feature': 'Fonctionnalité Phare',
-      'table.efficiency': "Score d'Efficacité",
+      'table.efficiency': 'Efficacité',
       'table.freshbooks.subtitle': 'Le Standard Pro',
-      'table.freshbooks.feature': 'Relance-Auto',
-      'table.freshbooks.desc': 'Relance les paiements en retard automatiquement',
+      'table.freshbooks.feature': 'Relance Auto',
+      'table.freshbooks.desc': 'Relance les paiements automatiquement',
       'table.wave.subtitle': 'Coût Zéro',
-      'table.wave.price': 'Gratuit Pour Toujours',
+      'table.wave.price': 'Gratuit',
       'table.wave.feature': 'Banque Gratuite',
-      'table.wave.desc': 'Facturation et Comptabilité combinées',
+      'table.wave.desc': 'Facturation et comptabilité combinées',
       'table.bonsai.subtitle': 'La Suite',
       'table.bonsai.feature': 'Contrats Intelligents',
       'table.bonsai.desc': 'Contrats légaux intégrés',
       'faq.title': 'Questions Fréquentes',
-      'faq.q1': "Ai-je besoin d'IA pour la facturation?",
-      'faq.a1': "Oui. Cela réduit le temps administratif de ~80% et garantit que vous êtes payé plus rapidement grâce aux rappels automatiques.",
-      'faq.q2': 'Lequel est vraiment gratuit?',
-      'faq.a2': 'Wave et Zoho Invoice sont définitivement gratuits pour leurs fonctionnalités de facturation de base.',
+      'faq.q1': "Ai-je besoin d'IA?",
+      'faq.a1': "Oui. Réduit le temps admin de ~80%.",
+      'faq.q2': 'Lequel est gratuit?',
+      'faq.a2': 'Wave et Zoho Invoice sont gratuits.',
       'footer.contact': 'Contact:',
-      'footer.copyright': '© 2026 Freelancer AI Tools. Divulgation: Les liens sont des liens affiliés.',
+      'footer.copyright': '© 2026 Freelancer AI Tools. Liens affiliés.',
       'toast.title': 'Nouvelle Inscription',
-      'toast.subtitle': 'Quelqu\'un de Berlin vient de cliquer sur FreshBooks'
+      'toast.subtitle': 'Quelqu\'un de Berlin a choisi FreshBooks'
     },
     de: {
-      'hero.badge': '🚀 Aktualisiert für 2026',
+      'hero.badge': '🚀 Aktualisiert 2026',
       'hero.title1': 'Rechnungsstellung.',
       'hero.title2': 'In 10 Sekunden erledigt.',
-      'hero.subtitle': 'Vergiss manuelle Tabellen. Diese 7 KI-Tools automatisieren 90% deines Rechnungsprozesses. Smart verglichen und getestet.',
-      'hero.cta': 'Finde Mein Perfektes Tool',
-      'calc.title': 'Wie viele Rechnungen versendest du pro Monat?',
+      'hero.subtitle': 'Vergiss manuelle Tabellen. Diese 7 KI-Tools automatisieren 90% deines Prozesses.',
+      'hero.cta': 'Finde Mein Tool',
+      'calc.title': 'Wie viele Rechnungen pro Monat?',
       'calc.invoices': 'Rechnungen',
       'calc.subtitle': 'Mit KI-Automatisierung sparst du ca.:',
       'calc.hours': 'Stunden',
@@ -760,109 +1083,145 @@
       'calc.thats': 'Das sind',
       'calc.billable': 'an abrechenbarer Zeit!',
       'quiz.title': '🎯 Die Intelligenz-Engine',
-      'quiz.subtitle': 'Wähle dein Profil. Wir merken uns deine Wahl.',
+      'quiz.subtitle': 'Wähle dein Profil.',
       'quiz.starter': '🐣 Einsteiger ($0)',
-      'quiz.pro': '💼 Pro (Skalierend)',
+      'quiz.pro': '💼 Pro',
       'quiz.nomad': '🌍 Nomade',
       'quiz.intl': '🌐 Global',
-      'quiz.launch': 'Tool Starten',
-      'quiz.match': '🏆 Treffer:',
-      'quiz.rec.starter': 'Für immer kostenlos. Am besten, um die Kosten bei Null zu halten.',
-      'quiz.rec.pro': 'Der Pro-Standard. Automatisierung spart dir Stunden.',
-      'quiz.rec.nomad': 'Mobile-First KI. Rechnungsstellung aus der Tasche.',
-      'quiz.rec.intl': 'Globale Währungen unterstützt. Kostenlos.',
+      'quiz.launch': 'Starten',
+      'quiz.rec.starter': 'Für immer kostenlos. Am besten für Null-Kosten.',
+      'quiz.rec.pro': 'Der Pro-Standard. Automatisierung spart Stunden.',
+      'quiz.rec.nomad': 'Mobile-First KI. Rechnungen aus der Tasche.',
+      'quiz.rec.intl': 'Globale Währungen. Kostenlos.',
       'tools.title': '🔥 KI-Tools Analyse',
-      'tools.sortby': 'Sortieren nach:',
+      'tools.sortby': 'Sortieren:',
       'tools.rating': '⭐ Bewertung',
       'tools.price': '💰 Preis',
       'cards.freshbooks.price': 'ab $19/Monat',
-      'cards.freshbooks.desc': 'Der Industriestandard. Am besten für Automatisierung, Zeiterfassung und professionelle Kundenportale.',
+      'cards.freshbooks.desc': 'Der Industriestandard. Am besten für Automatisierung.',
       'cards.wave.price': 'Für Immer Kostenlos',
-      'cards.wave.desc': 'Unschlagbar für Einsteiger. 100% kostenlose Rechnungsstellung ohne versteckte Abo-Kosten.',
+      'cards.wave.desc': 'Unschlagbar für Einsteiger. 100% kostenlos.',
       'cards.invoyce.price': '~1% Gebühr',
-      'cards.invoyce.desc': 'Mobile-First KI. Perfekt zum Erstellen von Rechnungen unterwegs direkt vom Handy.',
+      'cards.invoyce.desc': 'Mobile-First KI. Perfekt unterwegs.',
       'cards.zoho.price': 'Für Immer Kostenlos',
-      'cards.zoho.desc': 'Am besten für internationale Freelancer. Mehrwährungs- und Mehrsprachen-Support integriert.',
+      'cards.zoho.desc': 'Am besten für internationale Freelancer.',
       'cards.bonsai.price': 'ab $17/Monat',
-      'cards.bonsai.desc': 'Die Premium-Suite. Verträge, Angebote und Steuer/Buchhaltung alles an einem Ort.',
-      'cards.invoicerai.price': 'Niedrige Kosten',
-      'cards.invoicerai.desc': 'Pure Geschwindigkeit. Erstellt Rechnungen sofort mit KI-Unterstützung. Unbegrenzte Kunden.',
+      'cards.bonsai.desc': 'Die Premium-Suite. Verträge und Buchhaltung.',
+      'cards.invoicerai.price': 'Niedrig',
+      'cards.invoicerai.desc': 'Pure Geschwindigkeit. Sofortige Erstellung.',
       'cards.quickbooks.price': 'ab $25/Monat',
-      'cards.quickbooks.desc': 'Für wachsende Unternehmen. Umfangreiche Buchhaltungs- und Steuererstellungsfunktionen.',
-      'cards.visit': 'Seite Besuchen',
+      'cards.quickbooks.desc': 'Für wachsende Unternehmen.',
+      'cards.visit': 'Besuchen',
       'cards.getapp': 'App Holen',
-      'table.title': '📊 Smarte Vergleichsmatrix',
+      'table.title': '📊 Vergleichsmatrix',
       'table.tool': 'Tool',
-      'table.cost': 'Kostenmodell',
+      'table.cost': 'Kosten',
       'table.feature': 'Killer-Feature',
-      'table.efficiency': 'Effizienz-Score',
+      'table.efficiency': 'Effizienz',
       'table.freshbooks.subtitle': 'Der Pro-Standard',
       'table.freshbooks.feature': 'Auto-Mahnung',
-      'table.freshbooks.desc': 'Mahnt verspätete Zahlungen automatisch an',
+      'table.freshbooks.desc': 'Mahnt automatisch an',
       'table.wave.subtitle': 'Null Kosten',
-      'table.wave.price': 'Für Immer Kostenlos',
+      'table.wave.price': 'Kostenlos',
       'table.wave.feature': 'Kostenloses Banking',
-      'table.wave.desc': 'Rechnungsstellung & Buchhaltung kombiniert',
+      'table.wave.desc': 'Rechnung & Buchhaltung kombiniert',
       'table.bonsai.subtitle': 'Die Suite',
       'table.bonsai.feature': 'Intelligente Verträge',
-      'table.bonsai.desc': 'Integrierte rechtliche Verträge',
+      'table.bonsai.desc': 'Integrierte Verträge',
       'faq.title': 'Häufig Gefragt',
-      'faq.q1': 'Brauche ich KI für die Rechnungsstellung?',
-      'faq.a1': 'Ja. Es reduziert die Verwaltungszeit um ~80% und stellt sicher, dass du schneller bezahlt wirst durch Auto-Erinnerungen.',
-      'faq.q2': 'Welches ist wirklich kostenlos?',
-      'faq.a2': 'Wave und Zoho Invoice sind dauerhaft kostenlos für ihre Kern-Rechnungsstellungsfunktionen.',
+      'faq.q1': 'Brauche ich KI?',
+      'faq.a1': 'Ja. Reduziert Admin-Zeit um ~80%.',
+      'faq.q2': 'Welches ist kostenlos?',
+      'faq.a2': 'Wave und Zoho Invoice sind kostenlos.',
       'footer.contact': 'Kontakt:',
-      'footer.copyright': '© 2026 Freelancer AI Tools. Offenlegung: Links sind Affiliate-Links.',
+      'footer.copyright': '© 2026 Freelancer AI Tools. Affiliate-Links.',
       'toast.title': 'Neue Anmeldung',
-      'toast.subtitle': 'Jemand aus Berlin hat gerade auf FreshBooks geklickt'
+      'toast.subtitle': 'Jemand aus Berlin wählte FreshBooks'
     }
+  };
+
+  const langConfig = {
+    en: { flag: '🇺🇸', name: 'English' },
+    es: { flag: '🇪🇸', name: 'Español' },
+    fr: { flag: '🇫🇷', name: 'Français' },
+    de: { flag: '🇩🇪', name: 'Deutsch' }
   };
 
   let currentLanguage = 'en';
 
-  // === LANGUAGE SWITCHER ===
-  function switchLanguage(lang) {
-    currentLanguage = lang;
-    
-    // Update active button
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.classList.remove('active-lang');
-      if(btn.getAttribute('data-lang') === lang) {
-        btn.classList.add('active-lang');
-      }
-    });
+  // === DROPDOWN TOGGLE ===
+  function toggleLangDropdown() {
+    const switcher = document.getElementById('langSwitcher');
+    switcher.classList.toggle('open');
+  }
 
-    // Update all translatable elements
-    document.querySelectorAll('[data-i18n]').forEach(element => {
-      const key = element.getAttribute('data-i18n');
-      if(translations[lang] && translations[lang][key]) {
-        // Handle special cases (h1 with span)
-        if(key === 'hero.title2') {
-          element.innerHTML = translations[lang][key];
-        } else {
-          element.textContent = translations[lang][key];
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    const switcher = document.getElementById('langSwitcher');
+    if (!switcher.contains(e.target)) {
+      switcher.classList.remove('open');
+    }
+  });
+
+  // === LANGUAGE SWITCHER with LOADING STATE ===
+  function switchLanguage(lang) {
+    if (lang === currentLanguage) return;
+    
+    // #6: Smart Loading State
+    document.body.classList.add('loading-state');
+    
+    setTimeout(() => {
+      currentLanguage = lang;
+      
+      // Update dropdown UI
+      document.getElementById('currentFlag').textContent = langConfig[lang].flag;
+      document.getElementById('currentLang').textContent = langConfig[lang].name;
+      
+      // Update active option
+      document.querySelectorAll('.lang-option').forEach(opt => {
+        opt.classList.remove('active');
+        if(opt.getAttribute('data-lang') === lang) {
+          opt.classList.add('active');
+        }
+      });
+      
+      // Close dropdown
+      document.getElementById('langSwitcher').classList.remove('open');
+      
+      // Update all translatable elements
+      document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if(translations[lang] && translations[lang][key]) {
+          if(key === 'hero.title2') {
+            element.innerHTML = translations[lang][key];
+          } else {
+            element.textContent = translations[lang][key];
+          }
+        }
+      });
+      
+      // Update HTML lang attribute
+      document.documentElement.lang = lang;
+      
+      // Update calculator
+      updateCalc();
+      
+      // Save preference
+      localStorage.setItem('preferredLanguage', lang);
+      
+      // Update quiz recommendation if active
+      const recBox = document.getElementById('recommendation');
+      if(recBox.style.display === 'block') {
+        const activeQuizBtn = document.querySelector('.quiz-btn.active');
+        if(activeQuizBtn) {
+          const quizType = activeQuizBtn.onclick.toString().match(/runQuiz\('(\w+)'/)[1];
+          updateQuizRecommendation(quizType);
         }
       }
-    });
-
-    // Update HTML lang attribute
-    document.documentElement.lang = lang === 'en' ? 'en' : lang === 'es' ? 'es' : lang === 'fr' ? 'fr' : 'de';
-    
-    // Update calculator with current values
-    updateCalc();
-    
-    // Save preference
-    localStorage.setItem('preferredLanguage', lang);
-
-    // Update quiz recommendation if active
-    const recBox = document.getElementById('recommendation');
-    if(recBox.style.display === 'block') {
-      const activeQuizBtn = document.querySelector('.quiz-btn.active');
-      if(activeQuizBtn) {
-        const quizType = activeQuizBtn.onclick.toString().match(/runQuiz\('(\w+)'/)[1];
-        updateQuizRecommendation(quizType);
-      }
-    }
+      
+      // Remove loading state
+      document.body.classList.remove('loading-state');
+    }, 300);
   }
 
   // === QUIZ RECOMMENDATION UPDATER ===
@@ -878,20 +1237,20 @@
         intl: { t: "🏆 Match: Zoho Invoice", d: "Global currencies supported. Free." }
       },
       es: {
-        starter: { t: "🏆 Coincidencia: Wave App", d: "Gratis para siempre. Mejor para mantener los costos en cero." },
-        pro: { t: "🏆 Coincidencia: FreshBooks", d: "El estándar profesional. La automatización te ahorra horas." },
-        nomad: { t: "🏆 Coincidencia: Invoyce", d: "IA móvil primero. Facturación desde tu bolsillo." },
+        starter: { t: "🏆 Coincidencia: Wave App", d: "Gratis para siempre. Mejor para costos cero." },
+        pro: { t: "🏆 Coincidencia: FreshBooks", d: "El estándar pro. La automatización ahorra horas." },
+        nomad: { t: "🏆 Coincidencia: Invoyce", d: "IA móvil primero. Facturación desde el bolsillo." },
         intl: { t: "🏆 Coincidencia: Zoho Invoice", d: "Monedas globales soportadas. Gratis." }
       },
       fr: {
-        starter: { t: "🏆 Correspondance: Wave App", d: "Gratuit pour toujours. Idéal pour maintenir les coûts à zéro." },
-        pro: { t: "🏆 Correspondance: FreshBooks", d: "Le standard pro. L'automatisation vous fait gagner des heures." },
-        nomad: { t: "🏆 Correspondance: Invoyce", d: "IA mobile d'abord. Facturation depuis votre poche." },
-        intl: { t: "🏆 Correspondance: Zoho Invoice", d: "Devises mondiales prises en charge. Gratuit." }
+        starter: { t: "🏆 Correspondance: Wave App", d: "Gratuit pour toujours. Idéal pour coûts zéro." },
+        pro: { t: "🏆 Correspondance: FreshBooks", d: "Le standard pro. L'automatisation économise des heures." },
+        nomad: { t: "🏆 Correspondance: Invoyce", d: "IA mobile. Facturation depuis votre poche." },
+        intl: { t: "🏆 Correspondance: Zoho Invoice", d: "Devises mondiales supportées. Gratuit." }
       },
       de: {
-        starter: { t: "🏆 Treffer: Wave App", d: "Für immer kostenlos. Am besten, um die Kosten bei Null zu halten." },
-        pro: { t: "🏆 Treffer: FreshBooks", d: "Der Pro-Standard. Automatisierung spart dir Stunden." },
+        starter: { t: "🏆 Treffer: Wave App", d: "Für immer kostenlos. Am besten für Null-Kosten." },
+        pro: { t: "🏆 Treffer: FreshBooks", d: "Der Pro-Standard. Automatisierung spart Stunden." },
         nomad: { t: "🏆 Treffer: Invoyce", d: "Mobile-First KI. Rechnungsstellung aus der Tasche." },
         intl: { t: "🏆 Treffer: Zoho Invoice", d: "Globale Währungen unterstützt. Kostenlos." }
       }
@@ -901,6 +1260,24 @@
     title.innerHTML = data.t;
     text.textContent = data.d;
   }
+
+  // === #3: INTELLIGENT PRELOADING ===
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.card-link').forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        const prefetch = document.createElement('link');
+        prefetch.rel = 'prefetch';
+        prefetch.href = link.href;
+        document.head.appendChild(prefetch);
+      });
+    });
+    
+    // Load saved language
+    const savedLang = localStorage.getItem('preferredLanguage');
+    if(savedLang && ['en', 'es', 'fr', 'de'].includes(savedLang)) {
+      switchLanguage(savedLang);
+    }
+  });
 
   // === SECURITY: Anti-Spam Rate Limiting ===
   let clickCount = 0;
@@ -912,10 +1289,10 @@
         if (clickCount > 10 && !isBlocked) {
           isBlocked = true;
           const warnings = {
-            en: '⚠️ Too many clicks detected. Please wait 60 seconds.',
-            es: '⚠️ Demasiados clics detectados. Espera 60 segundos.',
-            fr: '⚠️ Trop de clics détectés. Veuillez patienter 60 secondes.',
-            de: '⚠️ Zu viele Klicks erkannt. Bitte warte 60 Sekunden.'
+            en: '⚠️ Too many clicks. Please wait 60 seconds.',
+            es: '⚠️ Demasiados clics. Espera 60 segundos.',
+            fr: '⚠️ Trop de clics. Patientez 60 secondes.',
+            de: '⚠️ Zu viele Klicks. Warte 60 Sekunden.'
           };
           alert(warnings[currentLanguage]);
           e.preventDefault();
@@ -923,24 +1300,7 @@
         }
       });
     });
-
-    // Load saved language
-    const savedLang = localStorage.getItem('preferredLanguage');
-    if(savedLang && ['en', 'es', 'fr', 'de'].includes(savedLang)) {
-      switchLanguage(savedLang);
-    }
   });
-
-  // === SECURITY: Console Warning ===
-  (function() {
-    let devtools = /./;
-    devtools.toString = function() {
-      console.log('%c⚠️ STOP!', 'color:red; font-size:40px; font-weight:bold;');
-      console.log('%cThis console is for developers only.', 'font-size:16px;');
-      return '';
-    };
-    console.log('%c ', devtools);
-  })();
 
   // === Calculator ===
   function updateCalc() {
@@ -949,9 +1309,8 @@
     const hours = Math.round(val * 4); 
     document.getElementById('hoursSaved').innerText = hours;
     
-    const currencySymbols = { en: '$', es: '$', fr: '$', de: '$' };
     const money = (hours * 100).toLocaleString();
-    document.getElementById('moneySaved').innerText = currencySymbols[currentLanguage] + money + "+";
+    document.getElementById('moneySaved').innerText = "$" + money + "+";
   }
 
   // === Social Proof ===
@@ -964,7 +1323,7 @@
 
   // === Scroll ===
   function scrollToSection(id) {
-    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   // === Sorting ===
@@ -1015,7 +1374,6 @@
       if(btns[parsed.index]) runQuiz(parsed.type, btns[parsed.index]);
     }
     
-    // Initialize calculator
     updateCalc();
   };
 
