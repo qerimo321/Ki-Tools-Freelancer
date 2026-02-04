@@ -1,3 +1,16 @@
+# Ki-Tools-Freelancer - Robots.txt
 User-agent: *
 Allow: /
+
 Sitemap: https://billr-ai.github.io/Ki-Tools-Freelancer/sitemap.xml
+
+# Keine Blockierungen
+Disallow:
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
