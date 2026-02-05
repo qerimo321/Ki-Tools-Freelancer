@@ -51,13 +51,16 @@
   --primary-dark:#2563eb;
   --secondary:#10b981;
   --secondary-light:#34d399;
+  --secondary-dark:#059669;
   --accent:#38bdf8;
+  --danger:#ef4444;
+  --danger-light:#f87171;
   --dark:#020617;
   --dark-light:#0f172a;
   --text:#1e293b; /* Dunkler Text für bessere Lesbarkeit */
   --text-dark:#0f172a; /* Noch dunkler für Überschriften */
   --text-muted:#475569;
-  --card-bg:rgba(255, 255, 255, 1); /* Weniger transparent */
+  --card-bg:rgba(255, 255, 255, 1);
   --card-border:rgba(203, 213, 225, 0.6);
   --glass:rgba(255,255,255,0.1);
   --shadow:0 8px 20px rgba(0,0,0,0.12);
@@ -106,9 +109,14 @@ body{
 .section-title{display:flex;align-items:center;gap:10px;font-size:1.3rem;font-weight:800;color:var(--text-dark);margin-bottom:20px}
 .section-title i{color:var(--primary);font-size:1.1rem}
 .top-charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
-.chart-card{background:white;border-radius:var(--radius);padding:20px;border:2px solid var(--card-border);box-shadow:var(--shadow)}
+.chart-card{background:white;border-radius:var(--radius);padding:20px;border:2px solid var(--card-border);box-shadow:var(--shadow);transition:transform 0.5s ease, opacity 0.5s ease;}
+.chart-card.moving-up{border-color:var(--secondary);box-shadow:0 0 0 2px var(--secondary), 0 8px 25px rgba(16,185,129,0.25);}
+.chart-card.moving-down{border-color:var(--danger);box-shadow:0 0 0 2px var(--danger), 0 8px 25px rgba(239,68,68,0.25);}
+.chart-card.fade-out{opacity:0.4;transform:scale(0.98);}
 .chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.chart-rank{width:36px;height:36px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:white}
+.chart-rank{width:36px;height:36px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:white;transition:all 0.5s ease;}
+.chart-rank.moving-up{background:linear-gradient(135deg,var(--secondary),var(--secondary-light));transform:scale(1.1);}
+.chart-rank.moving-down{background:linear-gradient(135deg,var(--danger),var(--danger-light));transform:scale(1.1);}
 .chart-rank.rank-1{background:linear-gradient(135deg,#f59e0b,#d97706)}
 .chart-rank.rank-2{background:linear-gradient(135deg:#94a3b8,#64748b)}
 .chart-rank.rank-3{background:linear-gradient(135deg:#fbbf24,#f59e0b)}
@@ -121,14 +129,17 @@ body{
 .chart-pros-cons{margin:12px 0;font-size:0.85rem;}
 .pros-list, .cons-list{margin:6px 0;}
 .pros-list li:before{content:"✓ ";color:var(--secondary);font-weight:bold;}
-.cons-list li:before{content:"✗ ";color:#ef4444;font-weight:bold;}
+.cons-list li:before{content:"✗ ";color:var(--danger);font-weight:bold;}
 .chart-actions{display:flex;gap:10px}
 .vote-btn{flex:1;background:rgba(255,255,255,0.05);border:2px solid var(--card-border);border-radius:8px;padding:12px;cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:8px;font-size:1rem;font-weight:600;color:var(--text)}
-.vote-btn i{font-size:1.2rem} /* Größere Icons */
+.vote-btn i{font-size:1.2rem}
 .vote-btn.up:hover{background:rgba(16,185,129,0.1);border-color:var(--secondary);color:var(--secondary)}
-.vote-btn.down:hover{background:rgba(239,68,68,0.1);border-color:#ef4444;color:#ef4444}
+.vote-btn.down:hover{background:rgba(239,68,68,0.1);border-color:var(--danger);color:var(--danger)}
 .vote-btn.active.up{background:rgba(16,185,129,0.15);border-color:var(--secondary);color:var(--secondary)}
-.vote-btn.active.down{background:rgba(239,68,68,0.15);border-color:#ef4444;color:#ef4444}
+.vote-btn.active.down{background:rgba(239,68,68,0.15);border-color:var(--danger);color:var(--danger)}
+.vote-btn.removing{opacity:0.5;transform:scale(0.95);}
+.vote-count-animation{animation:countChange 0.6s ease;}
+@keyframes countChange{0%{transform:scale(1);}50%{transform:scale(1.3);}100%{transform:scale(1);}}
 .tools-container{max-width:1200px;margin:0 auto;padding:0 20px 50px}
 .compact-tools-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:25px;flex-wrap:wrap;gap:15px}
 .compact-filters{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
@@ -145,11 +156,15 @@ body{
 .compact-tool-row{background:white;border-radius:var(--radius);padding:18px;border:2px solid var(--card-border);transition:var(--transition);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:15px;box-shadow:var(--shadow)}
 .compact-tool-row:hover{border-color:var(--primary);transform:translateY(-3px);box-shadow:0 12px 25px rgba(59,130,246,0.1)}
 .tool-vote-compact{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:60px}
-.vote-count{font-weight:800;font-size:1.1rem;color:var(--text-dark)}
-.vote-btn-compact{background:transparent;border:none;color:var(--text-muted);cursor:pointer;transition:var(--transition);padding:8px;border-radius:6px;font-size:1.4rem} /* Größere Vote-Buttons */
+.vote-count{font-weight:800;font-size:1.1rem;color:var(--text-dark);transition:all 0.3s ease;}
+.vote-count.upvoted{color:var(--secondary);}
+.vote-count.downvoted{color:var(--danger);}
+.vote-btn-compact{background:transparent;border:none;color:var(--text-muted);cursor:pointer;transition:var(--transition);padding:8px;border-radius:6px;font-size:1.4rem}
 .vote-btn-compact:hover{color:var(--primary)}
 .vote-btn-compact.active.up{color:var(--secondary)}
-.vote-btn-compact.active.down{color:#ef4444}
+.vote-btn-compact.active.down{color:var(--danger)}
+.vote-btn-compact.removing{animation:fadeOut 0.4s ease;opacity:0.5;}
+@keyframes fadeOut{from{opacity:1;}to{opacity:0.5;}}
 .tool-info-compact{overflow:hidden}
 .tool-name-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
 .tool-name-compact{font-weight:800;font-size:1.1rem;color:var(--text-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -158,7 +173,7 @@ body{
 .tool-pros-cons-compact{font-size:0.85rem;color:var(--text-muted);margin-top:8px;line-height:1.4;}
 .tool-pros-cons-compact span{font-weight:600;color:var(--primary);}
 .tool-pros-cons-compact .pros{color:var(--secondary);}
-.tool-pros-cons-compact .cons{color:#ef4444;}
+.tool-pros-cons-compact .cons{color:var(--danger);}
 .tool-meta-compact{display:flex;flex-direction:column;align-items:flex-end;gap:10px;min-width:160px}
 .tool-price-compact{font-size:1rem;font-weight:800;color:var(--secondary)}
 .tool-link-compact{background:linear-gradient(135deg,var(--primary),var(--accent));color:white;padding:10px 20px;border-radius:8px;text-decoration:none;font-weight:700;transition:var(--transition);font-size:0.9rem;white-space:nowrap;text-align:center;box-shadow:0 4px 10px rgba(59,130,246,0.2)}
@@ -281,7 +296,7 @@ let invoiceTools = [
   link:"https://freshbooks.com/",
   badge:"popular",
   useCases:["automation","time-tracking","international"],
-  votes:0,
+  votes:15,
   userVote:0
 },
 {
@@ -299,7 +314,7 @@ let invoiceTools = [
   link:"https://waveapps.com/",
   badge:"popular",
   useCases:["basic","free"],
-  votes:0,
+  votes:12,
   userVote:0
 },
 {
@@ -317,7 +332,7 @@ let invoiceTools = [
   link:"https://hellobonsai.com/",
   badge:"popular",
   useCases:["contracts","automation","time-tracking"],
-  votes:0,
+  votes:18,
   userVote:0
 },
 {
@@ -335,7 +350,7 @@ let invoiceTools = [
   link:"https://go.zoho.com/IB42",
   badge:"new",
   useCases:["international","automation"],
-  votes:0,
+  votes:8,
   userVote:0
 },
 {
@@ -353,7 +368,7 @@ let invoiceTools = [
   link:"https://invoyce.ai/",
   badge:"new",
   useCases:["mobile","automation"],
-  votes:0,
+  votes:10,
   userVote:0
 },
 {
@@ -371,7 +386,7 @@ let invoiceTools = [
   link:"https://quickbooks.intuit.com/",
   badge:"popular",
   useCases:["advanced","international"],
-  votes:0,
+  votes:14,
   userVote:0
 },
 {
@@ -389,7 +404,7 @@ let invoiceTools = [
   link:"https://invoicer.ai/",
   badge:"new",
   useCases:["automation","basic"],
-  votes:0,
+  votes:6,
   userVote:0
 },
 {
@@ -407,7 +422,7 @@ let invoiceTools = [
   link:"https://www.billdu.com/",
   badge:"free",
   useCases:["mobile","basic"],
-  votes:0,
+  votes:5,
   userVote:0
 },
 {
@@ -425,7 +440,7 @@ let invoiceTools = [
   link:"https://pancakeapp.com/",
   badge:"free",
   useCases:["basic"],
-  votes:0,
+  votes:4,
   userVote:0
 },
 {
@@ -443,7 +458,7 @@ let invoiceTools = [
   link:"https://www.getharvest.com/",
   badge:"popular",
   useCases:["time-tracking","automation"],
-  votes:0,
+  votes:11,
   userVote:0
 },
 {
@@ -461,7 +476,7 @@ let invoiceTools = [
   link:"https://debitoor.de/",
   badge:"free",
   useCases:["basic"],
-  votes:0,
+  votes:7,
   userVote:0
 },
 {
@@ -479,7 +494,7 @@ let invoiceTools = [
   link:"https://www.fastbill.com/",
   badge:"popular",
   useCases:["automation","advanced"],
-  votes:0,
+  votes:9,
   userVote:0
 }
 ];
@@ -501,7 +516,7 @@ const moreTools = [
   link:"https://www.and.co/",
   badge:"new",
   useCases:["contracts","time-tracking","automation"],
-  votes:0,
+  votes:5,
   userVote:0
 },
 {
@@ -519,7 +534,7 @@ const moreTools = [
   link:"https://www.pandadoc.com/",
   badge:"popular",
   useCases:["contracts","automation"],
-  votes:0,
+  votes:8,
   userVote:0
 },
 {
@@ -537,7 +552,7 @@ const moreTools = [
   link:"https://www.xero.com/",
   badge:"popular",
   useCases:["advanced","international"],
-  votes:0,
+  votes:13,
   userVote:0
 },
 {
@@ -555,7 +570,7 @@ const moreTools = [
   link:"https://slimvoice.co/",
   badge:"free",
   useCases:["basic","automation"],
-  votes:0,
+  votes:3,
   userVote:0
 }
 ];
@@ -664,6 +679,8 @@ let query = '';
 let activeUseCase = '';
 let searchTimeout;
 let userVotes = {};
+let lastVotedToolId = null;
+let oldPositions = {}; // Speichert alte Positionen für Animationen
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -947,17 +964,43 @@ function updateLang() {
 
 function renderTopCharts() {
   const container = document.getElementById('topCharts');
+  
+  // Speichere alte Positionen vor der Neuberechnung
+  const oldTopTools = [...invoiceTools]
+    .sort((a, b) => calculateScore(b) - calculateScore(a))
+    .slice(0, 5);
+  
+  oldPositions = {};
+  oldTopTools.forEach((tool, index) => {
+    oldPositions[tool.id] = index + 1; // Positionen sind 1-basiert
+  });
+  
+  // Sortiere neu basierend auf aktuellen Werten
   const sortedTools = [...invoiceTools]
-    .sort((a, b) => (b.votes + b.rating * 10) - (a.votes + a.rating * 10))
+    .sort((a, b) => calculateScore(b) - calculateScore(a))
     .slice(0, 5);
 
-  container.innerHTML = sortedTools.map((tool, index) => `
-    <div class="chart-card">
+  container.innerHTML = sortedTools.map((tool, index) => {
+    const newPosition = index + 1;
+    const oldPosition = oldPositions[tool.id];
+    let positionClass = '';
+    
+    // Bestimme ob sich die Position geändert hat
+    if (lastVotedToolId === tool.id) {
+      if (oldPosition && newPosition < oldPosition) {
+        positionClass = 'moving-up';
+      } else if (oldPosition && newPosition > oldPosition) {
+        positionClass = 'moving-down';
+      }
+    }
+    
+    return `
+    <div class="chart-card ${positionClass}" data-id="${tool.id}">
       <div class="chart-header">
-        <div class="chart-rank rank-${index + 1}">${index + 1}</div>
+        <div class="chart-rank rank-${newPosition} ${positionClass}">${newPosition}</div>
         <div class="chart-votes">
           <i class="fas fa-thumbs-up"></i>
-          <span>${tool.votes}</span>
+          <span class="vote-count-display">${tool.votes}</span>
         </div>
       </div>
       <div class="chart-tool-name">${tool.name}</div>
@@ -979,7 +1022,17 @@ function renderTopCharts() {
         </button>
       </div>
     </div>
-  `).join('');
+  `}).join('');
+
+  // Entferne Animationen nach 1.5 Sekunden
+  setTimeout(() => {
+    container.querySelectorAll('.chart-card.moving-up, .chart-card.moving-down').forEach(card => {
+      card.classList.remove('moving-up', 'moving-down');
+    });
+    container.querySelectorAll('.chart-rank.moving-up, .chart-rank.moving-down').forEach(rank => {
+      rank.classList.remove('moving-up', 'moving-down');
+    });
+  }, 1500);
 
   // Add vote event listeners
   container.querySelectorAll('.vote-btn').forEach(btn => {
@@ -991,27 +1044,111 @@ function renderTopCharts() {
   });
 }
 
+function calculateScore(tool) {
+  return tool.votes + tool.rating * 10;
+}
+
 function handleVote(toolId, vote) {
   const tool = invoiceTools.find(t => t.id === toolId);
   if (!tool) return;
 
-  // Reset if clicking same vote
+  // Animations-Effekte vorbereiten
+  const voteBtn = document.querySelector(`[data-id="${toolId}"] .vote-btn[data-vote="${vote}"]`);
+  const otherVoteBtn = document.querySelector(`[data-id="${toolId}"] .vote-btn[data-vote="${vote * -1}"]`);
+  const voteCountElement = document.querySelector(`[data-id="${toolId}"] .vote-count`);
+  const chartVoteElement = document.querySelector(`[data-id="${toolId}"] .vote-count-display`);
+  
+  // Wenn der Button bereits aktiv ist (also Vote entfernt wird)
   if (tool.userVote === vote) {
+    // Animation für entfernten Vote
+    if (voteBtn) {
+      voteBtn.classList.add('removing');
+      setTimeout(() => {
+        voteBtn.classList.remove('active', 'removing');
+      }, 400);
+    }
+    
+    // Animation für Vote-Count
+    if (voteCountElement) {
+      voteCountElement.classList.add(vote === 1 ? 'downvoted' : 'upvoted');
+      voteCountElement.classList.add('vote-count-animation');
+      setTimeout(() => {
+        voteCountElement.classList.remove('vote-count-animation');
+        setTimeout(() => {
+          voteCountElement.classList.remove(vote === 1 ? 'downvoted' : 'upvoted');
+        }, 300);
+      }, 600);
+    }
+    
+    // Aktualisiere die Werte
     tool.votes -= vote;
     tool.userVote = 0;
+    
+    // Entferne auch den anderen Button, falls er aktiv war (sollte nicht sein, aber sicherheitshalber)
+    if (otherVoteBtn) {
+      otherVoteBtn.classList.remove('active');
+    }
   } else {
-    // Remove previous vote if exists
+    // Neuer Vote oder Vote wechseln
+    
+    // Wenn bereits ein Vote vorhanden war (andere Richtung)
     if (tool.userVote !== 0) {
       tool.votes -= tool.userVote;
+      
+      // Animation für alten Vote entfernen
+      if (otherVoteBtn) {
+        otherVoteBtn.classList.add('removing');
+        setTimeout(() => {
+          otherVoteBtn.classList.remove('active', 'removing');
+        }, 400);
+      }
     }
+    
+    // Füge neuen Vote hinzu
     tool.votes += vote;
     tool.userVote = vote;
+    
+    // Animation für neuen Vote
+    if (voteBtn) {
+      voteBtn.classList.remove('removing');
+      voteBtn.classList.add('active');
+    }
+    
+    // Animation für Vote-Count
+    if (voteCountElement) {
+      voteCountElement.classList.add(vote === 1 ? 'upvoted' : 'downvoted');
+      voteCountElement.classList.add('vote-count-animation');
+      setTimeout(() => {
+        voteCountElement.classList.remove('vote-count-animation');
+      }, 600);
+    }
+  }
+
+  // Speichere ID des zuletzt gevoteten Tools für Animationen
+  lastVotedToolId = toolId;
+  
+  // Aktualisiere die Anzeige im Chart
+  if (chartVoteElement) {
+    chartVoteElement.textContent = tool.votes;
+    chartVoteElement.classList.add('vote-count-animation');
+    setTimeout(() => {
+      chartVoteElement.classList.remove('vote-count-animation');
+    }, 600);
   }
 
   userVotes[toolId] = { votes: tool.votes, userVote: tool.userVote };
   saveUserVotes();
+  
+  // Render Top Charts neu mit Animationen
   renderTopCharts();
-  applyFilters(); // Update main list
+  
+  // Update main list
+  applyFilters();
+  
+  // Setze lastVotedToolId nach 2 Sekunden zurück
+  setTimeout(() => {
+    lastVotedToolId = null;
+  }, 2000);
 }
 
 function applyFilters() {
@@ -1033,7 +1170,7 @@ function applyFilters() {
 
   filtered.sort((a, b) => {
     if (sort === 'rating') return b.rating - a.rating;
-    if (sort === 'votes') return (b.votes + b.rating * 10) - (a.votes + a.rating * 10);
+    if (sort === 'votes') return calculateScore(b) - calculateScore(a);
     if (sort === 'popular') return (b.badge === 'popular' ? 1 : 0) - (a.badge === 'popular' ? 1 : 0);
     if (sort === 'price-low' || sort === 'price-high') {
       const aPrice = a.priceDisplay[lang].includes('Free') || a.priceDisplay[lang].includes('Kostenlos') ? 0 : 
@@ -1071,7 +1208,7 @@ function renderTools(tools) {
   grid.innerHTML = tools.map(tool => `
     <div class="compact-tool-row" data-id="${tool.id}">
       <div class="tool-vote-compact">
-        <div class="vote-count">${tool.votes}</div>
+        <div class="vote-count ${tool.userVote === 1 ? 'upvoted' : tool.userVote === -1 ? 'downvoted' : ''}">${tool.votes}</div>
         <div>
           <button class="vote-btn-compact up ${tool.userVote === 1 ? 'active' : ''}" data-id="${tool.id}" data-vote="1">
             <i class="fas fa-thumbs-up"></i>
