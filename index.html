@@ -173,7 +173,7 @@ body{
 .chart-rank{width:36px;height:36px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:white;transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);}
 .chart-rank.moving-up{background:linear-gradient(135deg,var(--secondary),var(--secondary-light));transform:scale(1.1);}
 .chart-rank.moving-down{background:linear-gradient(135deg,var(--danger),var(--danger-light));transform:scale(1.1);}
-.chart-rank.rank-1{background:linear-gradient(135deg,#f59e0b,#d97706)}
+.chart-rank.rank-1{background:linear-gradient(135deg:#f59e0b,#d97706)}
 .chart-rank.rank-2{background:linear-gradient(135deg:#94a3b8,#64748b)}
 .chart-rank.rank-3{background:linear-gradient(135deg:#fbbf24,#f59e0b)}
 .chart-votes{display:flex;align-items:center;gap:6px;font-size:0.9rem;color:var(--text-muted)}
@@ -948,30 +948,6 @@ input:disabled + .cookie-slider {
   text-decoration: underline;
 }
 
-/* Privacy Badge - NEUE POSITION rechts unten */
-.privacy-badge {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: var(--primary);
-  color: white;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 999;
-  box-shadow: var(--shadow);
-  transition: var(--fast-transition);
-}
-
-.privacy-badge:hover {
-  transform: scale(1.1);
-  background: var(--primary-dark);
-}
-
 /* Enhanced Features */
 .ai-recommendation-badge {
   background: linear-gradient(135deg, #8b5cf6, #a78bfa);
@@ -1097,22 +1073,18 @@ input:disabled + .cookie-slider {
   50% { opacity: 0.7; }
 }
 
-/* Supabase Status - NEUE POSITION links unten */
+/* Supabase Status - NEUE POSITION im Footer */
 .supabase-status {
-  position: fixed;
-  bottom: 15px;
-  left: 15px;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  padding: 8px 12px;
-  border-radius: var(--radius);
-  font-size: 0.75rem;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
-  z-index: 998;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4px 10px;
+  border-radius: var(--radius);
+  font-size: 0.75rem;
   border: 1px solid var(--card-border);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin-left: 10px;
+  vertical-align: middle;
 }
 
 .supabase-status.online {
@@ -1192,9 +1164,33 @@ input:disabled + .cookie-slider {
   }
 }
 
+/* Cookie Floating Button */
+.cookie-floating-btn {
+  position: fixed;
+  left: 25px;
+  bottom: 25px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  box-shadow: var(--shadow);
+  transition: var(--fast-transition);
+}
+
+.cookie-floating-btn:hover {
+  transform: scale(1.1);
+}
+
 @media (max-width:768px){
-  .header{padding:50px 15px 15px}.header h1{font-size:1.8rem}.header p{font-size:1rem}.quick-navigation{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;padding:0 15px}.top-charts-section{padding:0 15px}.tools-container{padding:0 15px 30px}.compact-tools-header{flex-direction:column;align-items:stretch}.compact-filters{justify-content:center}.compact-tool-row{grid-template-columns:1fr;gap:12px}.tool-meta-compact{flex-direction:row;justify-content:space-between;align-items:center;min-width:auto;margin-top:10px}.tool-vote-compact{flex-direction:row;gap:15px;justify-content:center;min-width:auto;margin-bottom:10px}.search-tips{padding:0 2px;}.search-tip-item{padding:2px 8px;font-size:0.75rem;}.search-tips-scroll-btn{display:none !important;}.search-tips-label{font-size:0.75rem;margin-right:6px;}.sync-button{margin:10px 0 0 0;}.tool-popup-content{max-height:85vh;}.cookie-banner-content{flex-direction:column;text-align:center;}.cookie-banner-actions{justify-content:center;}.supabase-status{bottom:80px;left:50%;transform:translateX(-50%);width:auto;white-space:nowrap;}.privacy-badge{bottom:80px;right:20px;}}  
-@media (max-width:480px){.header h1{font-size:1.6rem}.search-box{padding:14px 16px 14px 48px;font-size:0.95rem}.quick-navigation{grid-template-columns:1fr 1fr}.top-charts{grid-template-columns:1fr}.compact-tool-row{padding:15px}.vote-btn-compact{font-size:1.2rem}.tool-popup-actions{flex-direction:column;}.cookie-btn{padding:8px 16px;}.supabase-status{font-size:0.7rem;padding:6px 10px;}.privacy-badge{bottom:70px;right:15px;width:45px;height:45px;}}
+  .header{padding:50px 15px 15px}.header h1{font-size:1.8rem}.header p{font-size:1rem}.quick-navigation{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;padding:0 15px}.top-charts-section{padding:0 15px}.tools-container{padding:0 15px 30px}.compact-tools-header{flex-direction:column;align-items:stretch}.compact-filters{justify-content:center}.compact-tool-row{grid-template-columns:1fr;gap:12px}.tool-meta-compact{flex-direction:row;justify-content:space-between;align-items:center;min-width:auto;margin-top:10px}.tool-vote-compact{flex-direction:row;gap:15px;justify-content:center;min-width:auto;margin-bottom:10px}.search-tips{padding:0 2px;}.search-tip-item{padding:2px 8px;font-size:0.75rem;}.search-tips-scroll-btn{display:none !important;}.search-tips-label{font-size:0.75rem;margin-right:6px;}.sync-button{margin:10px 0 0 0;}.tool-popup-content{max-height:85vh;}.cookie-banner-content{flex-direction:column;text-align:center;}.cookie-banner-actions{justify-content:center;}.supabase-status{margin-left:8px;font-size:0.7rem;padding:3px 8px;}.cookie-floating-btn{left:15px;bottom:80px;}}  
+@media (max-width:480px){.header h1{font-size:1.6rem}.search-box{padding:14px 16px 14px 48px;font-size:0.95rem}.quick-navigation{grid-template-columns:1fr 1fr}.top-charts{grid-template-columns:1fr}.compact-tool-row{padding:15px}.vote-btn-compact{font-size:1.2rem}.tool-popup-actions{flex-direction:column;}.cookie-btn{padding:8px 16px;}.supabase-status{display:none;}.cookie-floating-btn{bottom:70px;left:15px;width:40px;height:40px;}}
 </style>
 </head>
 <body>
@@ -1207,6 +1203,11 @@ input:disabled + .cookie-slider {
 <div class="scroll-top" id="scrollTop" aria-label="Scroll to top">
 <i class="fas fa-arrow-up"></i>
 </div>
+
+<!-- Cookie Floating Button -->
+<button class="cookie-floating-btn" id="cookieFloatingBtn" aria-label="Cookie-Einstellungen" type="button">
+  <i class="fas fa-cookie-bite"></i>
+</button>
 
 <!-- Tool Detail Popup -->
 <div class="tool-popup-overlay" id="toolPopup">
@@ -1324,11 +1325,6 @@ input:disabled + .cookie-slider {
   </div>
 </div>
 
-<!-- Privacy Badge - NEUE POSITION rechts unten -->
-<div class="privacy-badge" id="privacyBadge" title="Datenschutz-Einstellungen">
-  <i class="fas fa-shield-alt"></i>
-</div>
-
 <header class="header">
 <div class="badge" id="badgeText">🚀 16 Rechnungs-Tools für 2026</div>
 <h1 id="pageTitle">Finde sofort dein perfektes Rechnungs-Tool</h1>
@@ -1423,9 +1419,10 @@ input:disabled + .cookie-slider {
 <p>
 <a href="#" id="imprintLink"><i class="fas fa-building"></i> Impressum</a> | 
 <a href="#" id="privacyFooterLink"><i class="fas fa-shield-alt"></i> Datenschutz</a> | 
-<a href="#" id="cookieSettingsLink"><i class="fas fa-cookie-bite"></i> Cookie-Einstellungen</a> |
-<a href="#"><i class="fas fa-question-circle"></i> Hilfe</a> | 
-<a href="#"><i class="fas fa-envelope"></i> Feedback</a>
+<a href="#" id="cookieSettingsLink"><i class="fas fa-cookie-bite"></i> Cookie-Einstellungen</a>
+<span class="supabase-status online" id="supabaseStatusFooter">
+  <i class="fas fa-database"></i> <span>Supabase: verbunden</span>
+</span>
 </p>
 </footer>
 
@@ -2342,18 +2339,14 @@ function showNotification(message, type = 'info') {
 }
 
 function updateStatusIndicator(online) {
-  let indicator = document.querySelector('.supabase-status');
-  if (!indicator) {
-    indicator = document.createElement('div');
-    indicator.className = 'supabase-status';
-    document.body.appendChild(indicator);
+  const indicator = document.getElementById('supabaseStatusFooter');
+  if (indicator) {
+    indicator.className = `supabase-status ${online ? 'online' : 'offline'}`;
+    indicator.innerHTML = `
+      <i class="fas fa-database"></i>
+      <span>Supabase: ${online ? 'verbunden' : 'offline'}</span>
+    `;
   }
-    
-  indicator.className = `supabase-status ${online ? 'online' : 'offline'}`;
-  indicator.innerHTML = `
-    <i class="fas fa-database"></i>
-    <span>Supabase ${online ? 'Connected' : 'Offline'}</span>
-  `;
 }
 
 // Initialize
@@ -2558,6 +2551,11 @@ function setupEvents() {
     openCookieModal();
   });
   
+  // Cookie Floating Button Event
+  document.getElementById('cookieFloatingBtn').addEventListener('click', () => {
+    openCookieModal();
+  });
+  
   // Cookie Modal Events
   document.getElementById('cookieModalClose').addEventListener('click', closeCookieModal);
   document.getElementById('cookieModalCancel').addEventListener('click', closeCookieModal);
@@ -2599,11 +2597,6 @@ function setupEvents() {
   
   document.getElementById('cookieSettingsLink').addEventListener('click', (e) => {
     e.preventDefault();
-    openCookieModal();
-  });
-  
-  // Privacy Badge
-  document.getElementById('privacyBadge').addEventListener('click', () => {
     openCookieModal();
   });
 }
