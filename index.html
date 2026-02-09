@@ -210,7 +210,7 @@ body.dark-mode .dark-mode-toggle {
 .suggestion-item:hover{background:rgba(59,130,246,0.08)}
 .suggestion-icon{color:var(--primary);width:20px;font-size:1rem}
 .suggestion-text{flex:1;display:flex;flex-direction:column;gap:4px}
-.suggestion-name{color:var(--text-dark);font-weight:700;font-size:1rem}
+.suggestion-name{color:var(--text-dark);font-weight:700;font-size=1rem}
 .suggestion-meta{font-size:0.85rem;color:var(--text-muted)}
 .search-tips-wrapper{max-width:700px;margin:12px auto 0;position:relative}
 .search-tips{display:flex;align-items:center;flex-wrap:wrap;gap:6px;min-height:24px;padding:0 5px}
@@ -242,13 +242,13 @@ body.dark-mode .dark-mode-toggle {
 .chart-card.moving-down{border-color:var(--danger);box-shadow:0 0 0 2px var(--danger), 0 8px 25px rgba(239,68,68,0.25);}
 .chart-card.fade-out{opacity:0.4;transform:scale(0.98);}
 .chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.chart-rank{width:36px;height:36px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:white;transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);}
+.chart-rank{width:36px;height:36px;background:linear-gradient(135deg,var(--primary),var(--accent));border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size=1rem;color:white;transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);}
 .chart-rank.moving-up{background:linear-gradient(135deg,var(--secondary),var(--secondary-light));transform:scale(1.1);}
 .chart-rank.moving-down{background:linear-gradient(135deg,var(--danger),var(--danger-light));transform:scale(1.1);}
 .chart-rank.rank-1{background:linear-gradient(135deg:#f59e0b,#d97706)}
 .chart-rank.rank-2{background:linear-gradient(135deg:#94a3b8,#64748b)}
 .chart-rank.rank-3{background:linear-gradient(135deg:#fbbf24,#f59e0b)}
-.chart-votes{display:flex;align-items:center;gap:6px;font-size:0.9rem;color:var(--text-muted)}
+.chart-votes{display:flex;align-items:center;gap:6px;font-size=0.9rem;color:var(--text-muted)}
 .chart-votes i{color:var(--secondary)}
 .chart-tool-name{font-weight:800;font-size=1.1rem;color:var(--text-dark);margin-bottom:6px}
 .chart-category{font-size=0.8rem;color:var(--primary);font-weight=600;background:rgba(59,130,246,0.1);padding:4px 10px;border-radius=20px;display:inline-block}
@@ -298,7 +298,7 @@ body.dark-mode .dark-mode-toggle {
 .tool-name-compact{font-weight:800;font-size=1.1rem;color:var(--text-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tool-category-compact{font-size=0.75rem;color:var(--primary);font-weight=600;padding:4px 10px;background:rgba(59,130,246,0.1);border-radius=20px;white-space:nowrap}
 .tool-desc-compact{font-size=0.9rem;color:var(--text-muted);line-height=1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.tool-pros-cons-compact{font-size=0.85rem;color:var(--text-muted);margin-top:8px;line-height=1.4;}
+.tool-pros-cons-compact{font-size=0.85rem;color:var(--text-muted);margin-top:8px;line-height:1.4;}
 .tool-pros-cons-compact span{font-weight=600;color:var(--primary);}
 .tool-pros-cons-compact .pros{color:var(--secondary);}
 .tool-pros-cons-compact .cons{color:var(--danger);}
@@ -316,7 +316,7 @@ body.dark-mode .dark-mode-toggle {
 .footer p{color:var(--text-muted);font-size=0.9rem;margin-bottom:8px}
 .footer a{color:var(--primary);text-decoration:none;transition:var(--fast-transition);font-size=0.9rem}
 .footer a:hover{color:var(--primary-dark);text-decoration:underline}
-.scroll-top{position:fixed;bottom:25px;right:25px;background:linear-gradient(135deg,var(--primary),var(--accent));color:white;width:50px;height:50px;border-radius=50%;display:none;align-items:center;justify-content:center;cursor:pointer;transition:var(--fast-transition);z-index:999;box-shadow:0 6px 15px rgba(59,130,246,0.3)}
+.scroll-top{position:fixed;bottom:25px;left:25px;background:linear-gradient(135deg,var(--primary),var(--accent));color:white;width:50px;height:50px;border-radius=50%;display:none;align-items:center;justify-content:center;cursor:pointer;transition:var(--fast-transition);z-index:999;box-shadow:0 6px 15px rgba(59,130,246,0.3)}
 .scroll-top.visible{display:flex}
 .scroll-top:hover{transform:translateY(-3px) scale(1.1)}
 
@@ -1065,35 +1065,44 @@ input:disabled + .cookie-slider {
   margin-right: 8px;
 }
 
-/* Supabase Notification - Neu positioniert */
+/* Supabase Notification - Neu positioniert und dezenter */
 .notification {
   position: fixed;
   top: 20px;
   left: 20px;
-  background: rgba(30, 41, 59, 0.95);
+  background: rgba(30, 41, 59, 0.85);
   color: #cbd5e1;
-  padding: 12px 18px;
-  border-radius: var(--radius);
+  padding: 10px 15px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   z-index: 10000;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  animation: slideInLeft 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  max-width: 300px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(203, 213, 225, 0.1);
-  font-size: 0.9rem;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  animation: slideInLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 280px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(203, 213, 225, 0.2);
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .notification.success {
-  background: rgba(16, 185, 129, 0.95);
+  background: rgba(16, 185, 129, 0.85);
   color: white;
+  border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .notification.error {
-  background: rgba(239, 68, 68, 0.95);
+  background: rgba(239, 68, 68, 0.85);
   color: white;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.notification.info {
+  background: rgba(59, 130, 246, 0.85);
+  color: white;
+  border: 1px solid rgba(59, 130, 246, 0.3);
 }
 
 .notification-close {
@@ -1102,8 +1111,13 @@ input:disabled + .cookie-slider {
   color: inherit;
   cursor: pointer;
   padding: 0;
-  font-size: 0.9rem;
-  margin-left: 8px;
+  font-size: 0.85rem;
+  margin-left: 6px;
+  opacity: 0.8;
+}
+
+.notification-close:hover {
+  opacity: 1;
 }
 
 @keyframes slideInLeft {
@@ -1268,8 +1282,8 @@ input:disabled + .cookie-slider {
 }
 
 @media (max-width:768px){
-  .header{padding:50px 15px 15px}.header h1{font-size=1.8rem}.header p{font-size=1rem}.quick-navigation{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;padding:0 15px}.top-charts-section{padding:0 15px}.tools-container{padding:0 15px 30px}.compact-tools-header{flex-direction:column;align-items:stretch}.compact-filters{justify-content:center}.compact-tool-row{grid-template-columns:1fr;gap:12px}.tool-meta-compact{flex-direction:row;justify-content:space-between;align-items:center;min-width:auto;margin-top:10px}.tool-vote-compact{flex-direction:row;gap:15px;justify-content:center;min-width:auto;margin-bottom=10px}.search-tips{padding:0 2px;}.search-tip-item{padding:2px 8px;font-size=0.75rem;}.search-tips-scroll-btn{display:none !important;}.search-tips-label{font-size=0.75rem;margin-right=6px;}.sync-button{margin:10px 0 0 0;}.tool-popup-content{max-height:85vh;}.cookie-banner-content{flex-direction:column;text-align:center;}.cookie-banner-actions{justify-content:center;}.supabase-status{margin-left=8px;font-size=0.7rem;padding:3px 8px;}.cookie-floating-btn{left:15px;bottom:80px;}.notification{left:15px;max-width:calc(100% - 30px);}.dark-mode-toggle{right:70px;}}  
-@media (max-width:480px){.header h1{font-size=1.6rem}.search-box{padding:14px 16px 14px 48px;font-size=0.95rem}.quick-navigation{grid-template-columns:1fr 1fr}.top-charts{grid-template-columns:1fr}.compact-tool-row{padding:15px}.vote-btn-compact{font-size=1.2rem}.tool-popup-actions{flex-direction:column;}.cookie-btn{padding:8px 16px;}.supabase-status{display:none;}.cookie-floating-btn{bottom:70px;left:15px;width:40px;height:40px;}.dark-mode-toggle{right:60px;}}
+  .header{padding:50px 15px 15px}.header h1{font-size=1.8rem}.header p{font-size=1rem}.quick-navigation{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;padding:0 15px}.top-charts-section{padding:0 15px}.tools-container{padding:0 15px 30px}.compact-tools-header{flex-direction:column;align-items:stretch}.compact-filters{justify-content:center}.compact-tool-row{grid-template-columns:1fr;gap:12px}.tool-meta-compact{flex-direction:row;justify-content:space-between;align-items:center;min-width=auto;margin-top:10px}.tool-vote-compact{flex-direction:row;gap:15px;justify-content:center;min-width=auto;margin-bottom=10px}.search-tips{padding:0 2px;}.search-tip-item{padding:2px 8px;font-size=0.75rem;}.search-tips-scroll-btn{display:none !important;}.search-tips-label{font-size=0.75rem;margin-right=6px;}.sync-button{margin:10px 0 0 0;}.tool-popup-content{max-height:85vh;}.cookie-banner-content{flex-direction:column;text-align:center;}.cookie-banner-actions{justify-content:center;}.supabase-status{margin-left=8px;font-size=0.7rem;padding:3px 8px;}.cookie-floating-btn{left:15px;bottom:80px;}.notification{left:15px;max-width:calc(100% - 30px);font-size=0.8rem;padding:8px 12px;}.dark-mode-toggle{right:70px;}}  
+@media (max-width:480px){.header h1{font-size=1.6rem}.search-box{padding:14px 16px 14px 48px;font-size=0.95rem}.quick-navigation{grid-template-columns:1fr 1fr}.top-charts{grid-template-columns:1fr}.compact-tool-row{padding:15px}.vote-btn-compact{font-size=1.2rem}.tool-popup-actions{flex-direction:column;}.cookie-btn{padding:8px 16px;}.supabase-status{display:none;}.cookie-floating-btn{bottom:70px;left:15px;width:40px;height:40px;}.dark-mode-toggle{right:60px;}.notification{left:10px;max-width:calc(100% - 20px);}}
 </style>
 </head>
 <body>
@@ -2010,7 +2024,7 @@ const legalContent = {
       Telefon: +49 173 5489128 (Kein Telefonsupport, nur E-Mail)</p>
 
       <h3>2. Hosting durch GitHub Pages</h3>
-      <p>Wir hosten unsere Website bei <strong>GitHub Pages</strong>. Anbieter ist die GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA (nachfolgend „GitHub“).</p>
+      <p>Wir hosten unsere Website bei <strong>GitHub Pages</strong>. Anbieter ist die GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA (nachfolgend „GitHub").</p>
       <p>Wenn Sie unsere Website besuchen, erfasst GitHub Ihre IP-Adresse sowie technische Informationen (Logfiles), um die Sicherheit und Auslieferung der Website zu gewährleisten. Die Nutzung von GitHub Pages erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Wir haben ein berechtigtes Interesse an einer möglichst zuverlässigen Darstellung unserer Website.</p>
       <p>Die Datenübertragung in die USA wird auf die Standardvertragsklauseln der EU-Kommission gestützt. Weitere Details entnehmen Sie der Datenschutzerklärung von GitHub: <a href="https://docs.github.com/de/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener">https://docs.github.com/de/site-policy/privacy-policies/github-privacy-statement</a>.</p>
 
@@ -2156,7 +2170,7 @@ const legalContent = {
       <p><em>As of: February 2026</em></p>
     `,
     imprint: `
-      <h2>Imprint</h2>
+      <h2>Impressum</h2>
       
       <h3>Information according to § 5 DDG</h3>
       <p>Qerim Banulla<br>
@@ -2433,7 +2447,7 @@ async function loadAllData() {
   }
 }
 
-// Notification System - Neu positioniert
+// Notification System - Neu positioniert und dezenter
 function showNotification(message, type = 'info') {
   const notification = document.createElement('div');
   notification.className = `notification ${type}`;
@@ -2451,13 +2465,13 @@ function showNotification(message, type = 'info') {
     setTimeout(() => notification.remove(), 200);
   });
     
-  // Auto remove after 5 seconds
+  // Auto remove after 4 seconds (kürzer als vorher)
   setTimeout(() => {
     if (notification.parentNode) {
       notification.style.animation = 'slideOutLeft 0.2s ease';
       setTimeout(() => notification.remove(), 200);
     }
-  }, 5000);
+  }, 4000);
 }
 
 function updateStatusIndicator(online) {
@@ -2647,7 +2661,7 @@ function setupEvents() {
     applyFilters();
   });
 
-  // Scroll to top button
+  // Scroll to top button (jetzt links)
   const scrollBtn = document.getElementById('scrollTop');
   window.addEventListener('scroll', () => {
     scrollBtn.classList.toggle('visible', window.pageYOffset > 300);
@@ -2903,7 +2917,7 @@ async function handleVote(toolId, vote) {
       
       lastVotedToolId = toolId;
       
-      // Mini-Notification für Erfolg
+      // Dezente Notification für Erfolg
       showNotification('Vote gespeichert!', 'success');
     }
   } catch (error) {
@@ -3378,4 +3392,3 @@ function resetFilters() {
 </script>
 </body>
 </html>
-```
